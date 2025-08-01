@@ -3,16 +3,13 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
-import { motion, useScroll, useTransform, animate, useInView } from 'framer-motion';
-import Tilt from 'react-parallax-tilt'; // Changed from 'react-tilt'
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import Tilt from 'react-parallax-tilt';
 import {
   ArrowRight,
-  Globe,
   HeartHandshake,
-  Zap,
   ShieldCheck,
   Clock,
-  Rocket,
   Moon,
   Sun,
   ShoppingCart,
@@ -26,7 +23,7 @@ import { ParticlesBackground } from './ParticlesBackground';
 // --- Animation Variants ---
 const fadeIn = {
   initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] } },
 };
 
 const staggerContainer = {
@@ -285,7 +282,7 @@ function PillarCard({ icon, title, description }: typeof features[0]) {
       <div className="p-8 rounded-xl bg-gradient-to-b from-white/5 to-transparent border border-white/10 backdrop-blur-sm relative z-10">
         <div className="flex items-start gap-4">
           <div className="text-cyan-300 mt-1">
-            {React.cloneElement(icon, { className: "w-6 h-6" })}
+            {React.isValidElement(icon) ? React.cloneElement(icon as React.ReactElement<{ className?: string }>, { className: "w-6 h-6" }) : icon}
           </div>
           <div>
             <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
@@ -317,7 +314,7 @@ function DeveloperSection() {
             >
               <div className="text-center mb-12">
                 <h2 className="text-4xl font-bold mb-4 text-white">Built for developers</h2>
-                <p className="text-slate-400 max-w-2xl mx-auto">Integrate Meedo into your existing workflow with just a few lines of code. It's that simple.</p>
+                <p className="text-slate-400 max-w-2xl mx-auto">Integrate Meedo into your existing workflow with just a few lines of code. It&apos;s that simple.</p>
               </div>
               
               <Tilt 
@@ -362,7 +359,7 @@ function UseCasesSection() {
             >
               <div className="text-center mb-12">
                 <h2 className="text-4xl font-bold mb-4 text-white">Designed for your world</h2>
-                <p className="text-slate-400 max-w-2xl mx-auto">Whether you're selling products, software, or digital art, Meedo adapts to your business needs.</p>
+                <p className="text-slate-400 max-w-2xl mx-auto">Whether you&apos;re selling products, software, or digital art, Meedo adapts to your business needs.</p>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -410,7 +407,7 @@ function UseCaseCard({ icon, title, description }: { icon: React.ReactNode; titl
           
           <div className="relative z-10">
             <div className="text-cyan-300 mb-6">
-              {React.cloneElement(icon as React.ReactElement, { className: "w-10 h-10" })}
+              {React.isValidElement<{ className?: string }>(icon) ? React.cloneElement(icon, { className: "w-10 h-10" }) : icon}
             </div>
             <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
             <p className="text-slate-400">{description}</p>
@@ -432,7 +429,7 @@ function FinalCTA() {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(139,92,246,0.1),transparent_70%)]"></div>
               <div className="relative z-10">
                 <h2 className="text-4xl font-bold mb-4 text-white">
-                  It's time to join the <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">future</span> of support
+                  It&apos;s time to join the <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">future</span> of support
                 </h2>
                 <p className="text-slate-400 max-w-xl mx-auto mb-8">
                   Stop managing tickets. Start building your empire.
