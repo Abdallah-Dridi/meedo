@@ -476,7 +476,7 @@ function PricingSection() {
   };
 
   // Update usage data
-  const updateUsage = (caseKey: string, field: string, value: any) => {
+  const updateUsage = (caseKey: string, field: "volume" | "period", value: number | string) => {
     setUsageData(prev => ({
       ...prev,
       [caseKey]: {
