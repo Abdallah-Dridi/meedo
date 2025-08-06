@@ -6,19 +6,21 @@ import { useTheme } from 'next-themes';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
 import {
+  ChevronDown,
   ArrowRight,
-  HeartHandshake,
-  ShieldCheck,
-  Clock,
-  Moon,
-  Sun,
-  ShoppingCart,
-  Server,
-  Palette,
-  Copy,
-  Check,
+  Languages,
+  Package,
+  ShoppingBag,
+  User,
+  BarChart2,
+  DollarSign,
+  Zap,
+  PieChart,
+  MessageSquare,
+  BarChart3
 } from 'lucide-react';
 import { ParticlesBackground } from './ParticlesBackground';
+import Image from 'next/image';
 
 // --- Animation Variants ---
 const fadeIn = {
@@ -26,16 +28,10 @@ const fadeIn = {
   animate: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] } },
 };
 
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
+// Removed unused staggerContainer constant.
 
 // --- Main Landing Page Component ---
-export function LandingPage() {
+function LandingPage() {
   return (
     <div className="bg-white dark:bg-gradient-to-br dark:from-black dark:to-slate-900 text-slate-200 min-h-screen font-sans antialiased overflow-x-hidden">
       <ParticlesBackground />
@@ -43,15 +39,18 @@ export function LandingPage() {
       <main className="relative z-10">
         <HeroSection />
         <AboutSection />
-        <CorePillarsSection />
-        <DeveloperSection />
-        <UseCasesSection />
+        <FeatureCategorySection />
+        <PricingSection />
+        <IntegrationSection />
         <FinalCTA />
       </main>
       <Footer />
     </div>
   );
 }
+
+export default LandingPage;
+export { LandingPage };
 
 // --- Page Structure Components ---
 
@@ -79,7 +78,23 @@ function Header() {
               className="p-2 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {theme === 'dark' ? (
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <line x1="12" y1="1" x2="12" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="23"></line>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                  <line x1="1" y1="12" x2="3" y2="12"></line>
+                  <line x1="21" y1="12" x2="23" y2="12"></line>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+              )}
             </button>
           )}
           <motion.a 
@@ -235,187 +250,585 @@ function AboutSection() {
     );
 }
 
-const features = [
-    { title: "Save Time, Instantly", description: "Cut down 70% of repetitive customer replies with our intelligent AI automation, freeing up your most valuable resource.", icon: <Clock /> },
-    { title: "Stay Professional, 24/7", description: "Never miss a query. Handle FAQs, order tracking, and refund requests instantly, even when you're offline.", icon: <HeartHandshake /> },
-    { title: "Boost Credibility & Trust", description: "Provide consistent, high-quality support across all your channels without hiring a team. Build customer trust with fast, reliable answers.", icon: <ShieldCheck /> },
+// Feature categories data
+const featureCategories = [
+  {
+    title: "Core Communication & Language Support",
+    icon: <Languages className="w-10 h-10" />,
+    features: [
+      "Multi-language support - Full compatibility with all languages for global customer service",
+      "Emotionally intelligent responses - AI agent adapts tone and style based on customer emotions, with customizable tone settings",
+      "24/7 real-time support - Handle email and chat inquiries professionally and efficiently around the clock",
+      "Instant query resolution - Resolve customer questions immediately without requiring human intervention"
+    ]
+  },
+  {
+    title: "Order Management & Processing",
+    icon: <Package className="w-10 h-10" />,
+    features: [
+      "Order status tracking - Provide real-time order updates with integrated tracking links",
+      "Exchange label generation - Automatically create shipping labels to facilitate product exchanges",
+      "Automated returns processing - Instantly handle return requests while flagging potentially fraudulent cases",
+      "Smart refund/exchange logic - Automatically apply store-specific return and exchange policies and conditions",
+      "Proactive shipping notifications - Automatically send updates when shipping delays are detected, before customers inquire"
+    ]
+  },
+  {
+    title: "Social Media Management",
+    icon: <ShoppingBag className="w-10 h-10" />,
+    features: [
+      "Cross-platform brand protection - Monitor and safeguard brand reputation across all social media channels",
+      "Social engagement management - Actively respond to comments and inquiries across social platforms",
+      "Consistent social presence - Maintain active engagement on all social media channels",
+      "Strategic escalation options - Forward cases to human agents when needed as a goodwill gesture to enhance brand relationships"
+    ]
+  },
+  {
+    title: "Personalization & Intelligence",
+    icon: <User className="w-10 h-10" />,
+    features: [
+      "Rule-specific AI agents - Automatically applies rules based on store policy and procedure",
+      "Brand-specific AI personality - Allow store owners to define AI personality, tone, and response style (friendly, luxury, minimalist, etc.)",
+      "Cross-session memory - Remember past customer interactions, order history, and preferences for consistent, personalized responses across all channels",
+      "Inventory-integrated recommendations - Suggest available alternative products for out-of-stock items or exchange requests"
+    ]
+  },
+  {
+    title: "Analytics & Monitoring",
+    icon: <BarChart2 className="w-10 h-10" />,
+    features: [
+      "Customer satisfaction tracking - Monitor satisfaction levels through integrated survey systems",
+      "Real-time automation analytics - Track system health with customizable analytics platform for complete automation control",
+      "Performance insights - Comprehensive dashboard to monitor and optimize all aspects of the AI automation"
+    ]
+  }
 ];
 
-function CorePillarsSection() {
-    return (
-        <section className="container mx-auto px-4 py-24 md:py-32">
-            <motion.div 
-                className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start"
-                initial="initial" 
-                whileInView="animate" 
-                variants={staggerContainer} 
-                viewport={{ once: true, amount: 0.3 }}
-            >
-                <motion.div variants={fadeIn} className="lg:sticky top-24">
-                    <div className="inline-block bg-gradient-to-r from-purple-500/20 to-cyan-500/20 p-0.5 rounded-lg mb-6">
-                      <div className="text-xs font-mono px-3 py-1.5 bg-black rounded-lg text-cyan-300">
-                        CORE PILLARS
-                      </div>
-                    </div>
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Built for mass adoption</h2>
-                    <p className="text-slate-400 mt-4 text-lg">Meedo is built on core pillars to ensure your business can scale without friction.</p>
-                </motion.div>
-                <motion.div variants={staggerContainer} className="space-y-8">
-                    {features.map((feature) => (
-                        <PillarCard key={feature.title} {...feature} />
-                    ))}
-                </motion.div>
-            </motion.div>
-        </section>
-    );
-}
-
-function PillarCard({ icon, title, description }: typeof features[0]) {
+function FeatureCategorySection() {
   return (
-    <motion.div 
-      variants={fadeIn}
-      className="group relative overflow-hidden"
-      whileHover={{ y: -10 }}
-      transition={{ type: "spring", stiffness: 300 }}
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-cyan-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-      <div className="p-8 rounded-xl bg-gradient-to-b from-white/5 to-transparent border border-white/10 backdrop-blur-sm relative z-10">
-        <div className="flex items-start gap-4">
-          <div className="text-cyan-300 mt-1">
-            {React.isValidElement(icon) ? React.cloneElement(icon as React.ReactElement<{ className?: string }>, { className: "w-6 h-6" }) : icon}
-          </div>
-          <div>
-            <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-            <p className="text-slate-400">{description}</p>
-          </div>
+    <section id="feature-categories" className="container mx-auto px-4 py-24">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="max-w-6xl mx-auto"
+      >
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold mb-4 text-white">Powerful Features for Seamless Support</h2>
+          <p className="text-slate-400 max-w-2xl mx-auto">Comprehensive AI solutions designed to handle every aspect of customer support</p>
         </div>
-      </div>
-    </motion.div>
+        
+        <div className="flex flex-wrap justify-center gap-8 items-stretch">
+          {featureCategories.map((category, index) => (
+            <div key={index} className="w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2rem)] flex">
+              <FeatureCategoryCard 
+                title={category.title} 
+                icon={category.icon} 
+                features={category.features} 
+              />
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    </section>
   );
 }
 
-function DeveloperSection() {
-    const codeText = `import meedo from 'meedo-ai';\n\nconst support = meedo.connect({ \n  apiKey: "YOUR_API_KEY",\n  rules: ["handle_refunds", "track_orders"]\n});\n\nsupport.start();`;
-    const [copied, setCopied] = useState(false);
+function FeatureCategoryCard({ title, icon, features }: { title: string; icon: React.ReactNode; features: string[] }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: "50%", y: "50%" });
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(codeText);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    };
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      setMousePosition({ x: `${x}%`, y: `${y}%` });
+    }
+  };
 
-    return (
-        <section className="container mx-auto px-4 py-24">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-4xl mx-auto"
-            >
-              <div className="text-center mb-12">
-                <h2 className="text-4xl font-bold mb-4 text-white">Built for developers</h2>
-                <p className="text-slate-400 max-w-2xl mx-auto">Integrate Meedo into your existing workflow with just a few lines of code. It&apos;s that simple.</p>
-              </div>
-              
-              <Tilt 
-                tiltMaxAngleX={5}
-                tiltMaxAngleY={5}
-                scale={1.02}
-                perspective={1000}
-                className="Tilt"
-              >
-                <div className="bg-gradient-to-br from-slate-900 to-black rounded-2xl border border-white/10 p-1 overflow-hidden">
-                  <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-xl">
-                    <div className="flex justify-between items-center p-4 border-b border-white/10">
-                      <div className="flex items-center gap-2">
-                        <span className="w-3 h-3 rounded-full bg-red-500"></span>
-                        <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
-                        <span className="w-3 h-3 rounded-full bg-green-500"></span>
-                      </div>
-                      <button onClick={handleCopy} className="text-sm flex items-center gap-1.5 text-slate-400 hover:text-white transition">
-                        {copied ? <Check size={16} /> : <Copy size={16} />}
-                        {copied ? 'Copied!' : 'Copy'}
-                      </button>
-                    </div>
-                    <pre className="text-sm p-6 overflow-x-auto">
-                      <code className="text-slate-300 font-mono">{codeText}</code>
-                    </pre>
-                  </div>
-                </div>
-              </Tilt>
-            </motion.div>
-        </section>
-    );
-}
-
-function UseCasesSection() {
-    return (
-        <section className="container mx-auto px-4 py-24">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="max-w-6xl mx-auto"
-            >
-              <div className="text-center mb-12">
-                <h2 className="text-4xl font-bold mb-4 text-white">Designed for your world</h2>
-                <p className="text-slate-400 max-w-2xl mx-auto">Whether you&apos;re selling products, software, or digital art, Meedo adapts to your business needs.</p>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <UseCaseCard icon={<ShoppingCart />} title="E-commerce Stores" description="Automate order tracking, refund requests, and product questions on Shopify, WooCommerce, and more." />
-                <UseCaseCard icon={<Server />} title="SaaS Companies" description="Provide instant answers to common questions, handle basic troubleshooting, and onboard new users 24/7." />
-                <UseCaseCard icon={<Palette />} title="Digital Creators" description="Manage DMs, answer questions about your content, and protect your brand across social media platforms." />
-              </div>
-            </motion.div>
-        </section>
-    );
-}
-
-function UseCaseCard({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
-    const ref = useRef<HTMLDivElement>(null);
-    const [mousePosition, setMousePosition] = useState({ x: "50%", y: "50%" });
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (ref.current) {
-            const rect = ref.current.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            setMousePosition({ x: `${x}%`, y: `${y}%` });
-        }
-    };
-
-    return (
+  return (
+    <motion.div
+      whileHover={{ y: -10 }}
+      transition={{ type: "spring", stiffness: 300 }}
+      className="flex flex-col h-full"
+    >
       <Tilt 
-        tiltMaxAngleX={15}
-        tiltMaxAngleY={15}
+        tiltMaxAngleX={5}
+        tiltMaxAngleY={5}
         scale={1.02}
         perspective={1000}
       >
         <div 
           ref={ref}
           onMouseMove={handleMouseMove}
-          onMouseLeave={() => setMousePosition({ x: "50%", y: "50%" })}
-          className="relative p-8 rounded-2xl bg-gradient-to-b from-white/5 to-transparent border border-white/10 backdrop-blur-sm overflow-hidden h-full"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className="relative p-8 rounded-2xl bg-gradient-to-b from-white/5 to-transparent border border-white/10 backdrop-blur-sm h-full min-h-[480px] flex flex-col overflow-hidden"
         >
           <div 
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+            className="absolute inset-0 transition-opacity duration-300"
             style={{ 
-              background: `radial-gradient(circle at ${mousePosition.x} ${mousePosition.y}, rgba(139, 92, 246, 0.15), transparent 70%`
+              background: `radial-gradient(circle at ${mousePosition.x} ${mousePosition.y}, rgba(139, 92, 246, 0.15), transparent 70%)`,
+              opacity: isHovered ? 1 : 0
             }}
           ></div>
           
-          <div className="relative z-10">
+          <div className="relative z-10 flex flex-col flex-1">
             <div className="text-cyan-300 mb-6">
-              {React.isValidElement<{ className?: string }>(icon) ? React.cloneElement(icon, { className: "w-10 h-10" }) : icon}
+              {icon}
             </div>
-            <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
-            <p className="text-slate-400">{description}</p>
+            <h3 className="text-xl font-semibold text-white mb-4">{title}</h3>
+            <ul className="mt-4 space-y-3 flex-1">
+              {features.slice(0, 3).map((feature, idx) => (
+                <motion.li 
+                  key={idx}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="flex items-start text-slate-400"
+                >
+                  <span className="text-green-400 mr-2">✓</span>
+                  <span className="text-sm">{feature.split(' - ')[0]}</span>
+                </motion.li>
+              ))}
+              {features.length > 3 && (
+                <motion.li 
+                  className="text-sm text-purple-400 font-medium mt-2 inline-flex items-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  +{features.length - 3} more features
+                  <ArrowRight className="ml-1 h-4 w-4" />
+                </motion.li>
+              )}
+            </ul>
+            
+            <motion.div 
+              className="mt-6"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <a 
+                href="#" 
+                className="inline-flex items-center text-sm font-medium text-cyan-300 hover:text-cyan-200 transition-colors"
+              >
+                View all features
+                <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+            </motion.div>
           </div>
         </div>
       </Tilt>
-    );
+    </motion.div>
+  );
 }
+function PricingSection() {
+  // State for selected features
+  const [selectedFeatures, setSelectedFeatures] = useState<Set<string>>(
+    new Set([
+      "Core Communication & Language Support",
+      "Personalization & Intelligence"
+    ])
+  );
+
+  // State for usage data
+  const [usageData, setUsageData] = useState({
+    simple: { volume: 0, period: 'monthly' },
+    return: { volume: 0, period: 'monthly' },
+    social: { volume: 0, period: 'monthly' },
+    complex: { volume: 0, period: 'monthly' }
+  });
+
+  // Feature definitions
+  const features = [
+    { name: "Core Communication & Language Support", price: 59, icon: <MessageSquare className="w-5 h-5 text-cyan-400" /> },
+    { name: "Order Management & Processing", price: 69, icon: <Package className="w-5 h-5 text-purple-400" /> },
+    { name: "Social Media Management", price: 59, icon: <ShoppingBag className="w-5 h-5 text-pink-400" /> },
+    { name: "Analytics & Monitoring", price: 59, icon: <BarChart3 className="w-5 h-5 text-green-400" /> },
+    { name: "Personalization & Intelligence", price: 0, icon: <User className="w-5 h-5 text-yellow-400" />, free: true }
+  ];
+
+  // Case types definitions
+  const caseTypes = [
+    { key: 'simple', name: "Simple Inquiry", price: 0.075, range: "$0.05-$0.10" },
+    { key: 'return', name: "Return / Exchange", price: 0.20, range: "$0.15-$0.25" },
+    { key: 'social', name: "Social Media Case", price: 0.15, range: "$0.10-$0.20" },
+    { key: 'complex', name: "Escalated/Complex", price: 0.35, range: "$0.30+", note: "(custom, or human-involved)" }
+  ];
+
+  // Toggle feature selection
+  const toggleFeature = (featureName: string) => {
+    if (featureName === 'Personalization & Intelligence') return; // Can't toggle free feature
+    
+    setSelectedFeatures(prev => {
+      const newSelected = new Set(prev);
+      if (newSelected.has(featureName)) {
+        newSelected.delete(featureName);
+      } else {
+        newSelected.add(featureName);
+      }
+      return newSelected;
+    });
+  };
+
+  // Update usage data
+  const updateUsage = (caseKey: string, field: string, value: any) => {
+    setUsageData(prev => ({
+      ...prev,
+      [caseKey]: {
+        ...prev[caseKey as keyof typeof prev],
+        [field]: value
+      }
+    }));
+  };
+
+  // Calculate setup cost with discounts
+  const calculateSetupCost = () => {
+    let total = 0;
+    features.forEach(feature => {
+      if (selectedFeatures.has(feature.name)) {
+        total += feature.price;
+      }
+    });
+
+    let discount = 0;
+    const count = selectedFeatures.size;
+    
+    if (count >= 4) discount = 30;
+    else if (count >= 3) discount = 15;
+    else if (count >= 2) discount = 10;
+
+    return {
+      total: Math.max(0, total - discount),
+      discount,
+      originalTotal: total
+    };
+  };
+
+  // Calculate usage cost
+  const calculateUsageCost = () => {
+    let totalCost = 0;
+    let period = 'monthly';
+    
+    Object.entries(usageData).forEach(([key, data]) => {
+      const caseType = caseTypes.find(c => c.key === key);
+      if (data.volume > 0 && caseType) {
+        let multiplier = 1;
+        if (data.period === 'daily') multiplier = 30;
+        else if (data.period === 'yearly') multiplier = 1/12;
+        totalCost += data.volume * caseType.price * multiplier;
+        period = data.period;
+      }
+    });
+
+    return {
+      totalCost,
+      period
+    };
+  };
+
+  // Get calculated costs
+  const { total: setupTotal, discount, originalTotal } = calculateSetupCost();
+  const { totalCost: usageCost, period } = calculateUsageCost();
+
+   return (
+    <section className="container mx-auto px-4 py-24" id="pricing">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="max-w-6xl mx-auto"
+      >
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 mb-6">
+            <span className="text-sm font-medium text-purple-400">Transparent Pricing</span>
+          </div>
+          <h2 className="text-4xl font-bold mb-4 text-white">
+            Simple, Fair <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">Pricing</span>
+          </h2>
+          <p className="text-slate-400 max-w-2xl mx-auto">
+            Pay only for what you need with our flexible one-time setup and pay-per-case model
+          </p>
+        </div>
+
+        {/* Feature Bundles and Usage Side-by-Side */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+          {/* Feature Bundles Section */}
+          <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-white/10 p-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-lg bg-gradient-to-r from-purple-600/10 to-cyan-600/10">
+                <Zap className="w-5 h-5 text-purple-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-white">Feature Bundles</h3>
+            </div>
+            
+            <div className="space-y-4">
+              {features.map((feature, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  viewport={{ once: true }}
+                  onClick={() => toggleFeature(feature.name)}
+                  className={`flex items-center justify-between p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
+                    selectedFeatures.has(feature.name) 
+                      ? 'bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border-purple-400/50 shadow-lg shadow-purple-500/10'
+                      : 'bg-slate-800/30 border-white/10 hover:border-purple-400/50'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-slate-700/50">
+                      {feature.icon}
+                    </div>
+                    <span className="text-white font-medium">{feature.name}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className={`font-bold ${
+                      feature.free ? 'text-green-400' : 'text-white'
+                    }`}>
+                      {feature.free ? 'FREE' : `$${feature.price}`}
+                    </span>
+                    {selectedFeatures.has(feature.name) && !feature.free && (
+                      <div className="w-6 h-6 flex items-center justify-center rounded-full bg-purple-500 text-white">
+                        ✓
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Usage Estimation Section */}
+          <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-white/10 p-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-lg bg-gradient-to-r from-purple-600/10 to-cyan-600/10">
+                <PieChart className="w-5 h-5 text-purple-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-white">Expected Usage</h3>
+            </div>
+            
+            <div className="space-y-6">
+              {caseTypes.map((caseType, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  viewport={{ once: true }}
+                  className="p-4 rounded-xl bg-slate-800/30 border border-white/10"
+                >
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-white font-medium">{caseType.name}</span>
+                    <span className="text-sm text-slate-400">{caseType.range} per case</span>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-slate-400">Volume</span>
+                      <div className="relative">
+                        <select 
+                          value={usageData[caseType.key as keyof typeof usageData].period}
+                          onChange={(e) => updateUsage(caseType.key, 'period', e.target.value)}
+                          className="appearance-none bg-slate-700/50 border border-white/20 rounded-lg pl-3 pr-8 py-1.5 text-white text-sm focus:border-purple-400 focus:outline-none"
+                        >
+                          <option value="daily">Daily</option>
+                          <option value="monthly">Monthly</option>
+                          <option value="yearly">Yearly</option>
+                        </select>
+                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 text-slate-400 pointer-events-none" />
+                      </div>
+                    </div>
+                    
+                    {/* Range input for volume */}
+                    <div className="space-y-2">
+                      <input 
+                        type="range" 
+                        min="0"
+                        max="1000"
+                        step="10"
+                        value={usageData[caseType.key as keyof typeof usageData].volume || 0}
+                        onChange={(e) => updateUsage(caseType.key, 'volume', parseInt(e.target.value) || 0)}
+                        className="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-purple-500"
+                      />
+                      <div className="flex justify-between text-xs text-slate-400">
+                        <span>0</span>
+                        <span>{usageData[caseType.key as keyof typeof usageData].volume} cases</span>
+                        <span>1000</span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Results Panel - Horizontal Container */}
+        <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-white/10 p-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Setup Cost */}
+            <div className="p-5 rounded-xl bg-slate-800/30 border border-white/10">
+              <div className="flex justify-between items-center mb-3">
+                <h4 className="text-white font-medium">Setup Cost</h4>
+                <div className="p-1.5 rounded-lg bg-gradient-to-r from-purple-600/10 to-cyan-600/10">
+                  <DollarSign className="w-4 h-4 text-purple-400" />
+                </div>
+              </div>
+              <div className="text-2xl font-bold text-white mb-1">${setupTotal}</div>
+              {discount > 0 && (
+                <div className="text-sm text-slate-400 line-through">${originalTotal} Save ${discount}</div>
+              )}
+              <p className="text-sm text-slate-400 mt-2">One-time payment</p>
+              {discount > 0 && (
+                <div className="mt-3 p-2 bg-green-900/20 rounded-lg border border-green-500/30">
+                  <p className="text-xs text-green-400">🎉 Bundle Discount Applied!</p>
+                </div>
+              )}
+            </div>
+
+            {/* Usage Cost */}
+            <div className="p-5 rounded-xl bg-slate-800/30 border border-white/10">
+              <div className="flex justify-between items-center mb-3">
+                <h4 className="text-white font-medium">Usage Cost</h4>
+                <div className="p-1.5 rounded-lg bg-gradient-to-r from-purple-600/10 to-cyan-600/10">
+                  <PieChart className="w-4 h-4 text-purple-400" />
+                </div>
+              </div>
+              <div className="text-2xl font-bold text-white mb-1">${usageCost.toFixed(2)}</div>
+              <p className="text-sm text-slate-400">
+                per {period === 'daily' ? 'day' : period === 'yearly' ? 'year' : 'month'}
+              </p>
+              {usageCost === 0 && (
+                <div className="mt-3 p-2 bg-purple-900/20 rounded-lg border border-purple-500/30">
+                  <p className="text-xs text-purple-400">Add usage volumes to see costs</p>
+                </div>
+              )}
+            </div>
+
+            {/* Total Summary */}
+            <div className="p-5 rounded-xl bg-gradient-to-br from-purple-500/20 to-cyan-500/20 border border-purple-400/50 shadow-lg shadow-purple-500/10">
+              <div className="flex justify-between items-center mb-3">
+                <h4 className="text-white font-medium">Your Investment</h4>
+                <div className="p-1.5 rounded-lg bg-gradient-to-r from-purple-600/10 to-cyan-600/10">
+                  <DollarSign className="w-4 h-4 text-purple-400" />
+                </div>
+              </div>
+              <div className="text-2xl font-bold text-white mb-1">${setupTotal} to start</div>
+              {usageCost > 0 && (
+                <p className="text-base text-slate-300">${usageCost.toFixed(2)} ongoing</p>
+              )}
+              <div className="mt-4 pt-3 border-t border-white/20">
+                <p className="text-sm text-slate-400">
+                  {selectedFeatures.size} feature{selectedFeatures.size !== 1 ? 's' : ''} selected
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
+const integrations = [
+  { name: "Shopify", logo: "/images/logos/shopify.jpg" },
+  { name: "WooCommerce", logo: "/images/logos/woocommerce.jpg" },
+  { name: "BigCommerce", logo: "/images/logos/big-commerce.jpg" },
+  { name: "Magento", logo: "/images/logos/magento.svg" },
+  { name: "Salesforce", logo: "/images/logos/salesforce.svg" },
+  { name: "Square", logo: "/images/logos/square.svg" },
+];
+
+function IntegrationSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    
+    const container = containerRef.current;
+    const containerWidth = container.scrollWidth - container.clientWidth;
+    let animationFrame: number;
+    
+    const animateScroll = () => {
+      setScrollPosition(prev => {
+        if (prev >= containerWidth) {
+          return 0;
+        }
+        return isPaused ? prev : prev + 0.5;
+      });
+      animationFrame = requestAnimationFrame(animateScroll);
+    };
+    
+    animationFrame = requestAnimationFrame(animateScroll);
+    
+    return () => cancelAnimationFrame(animationFrame);
+  }, [isPaused]);
+
+  return (
+    <section className="container mx-auto px-4 py-24">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="max-w-4xl mx-auto"
+      >
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold mb-4 text-white">Easy and Fast Integration</h2>
+          <p className="text-slate-400 max-w-2xl mx-auto">
+            Seamlessly connect with your existing e-commerce platforms and tools
+          </p>
+        </div>
+        
+        <div 
+          ref={containerRef}
+          className="relative overflow-hidden py-8"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <div 
+            className="flex space-x-12"
+            style={{ transform: `translateX(-${scrollPosition}px)` }}
+          >
+            {[...integrations, ...integrations].map((integration, index) => (
+              <motion.div
+                key={`${integration.name}-${index}`}
+                className="flex flex-col items-center justify-center min-w-[180px]"
+                whileHover={{ y: -5 }}
+              >
+                <div className="w-20 h-20 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 mb-4 p-4">
+                  <div className="relative w-16 h-16">
+                    <Image
+                      src={integration.logo}
+                      alt={`${integration.name} logo`}
+                      fill
+                      className="object-contain"
+                      unoptimized
+                    />
+                  </div>
+                </div>
+                <span className="text-lg font-medium text-white">{integration.name}</span>
+              </motion.div>
+            ))}
+          </div>
+          
+          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none"></div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
+
+
 
 function FinalCTA() {
     return (
