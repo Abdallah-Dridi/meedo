@@ -57,8 +57,40 @@ export { LandingPage };
 function Header() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => setMounted(true), []);
+
+  // Navigation links
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { 
+      name: "Features", 
+      href: "#features",
+      dropdown: [
+      { 
+      name: "Multi-Language Support", 
+      href: "/features/multi-language"  // Updated link
+        },
+        { name: "Order Management", href: "#feature-ordermanagement" },
+        { name: "Social Media", href: "#feature-social" },
+        { name: "Personalization", href: "#feature-personalization" },
+        { name: "Analytics", href: "#feature-analytics" },
+      ]
+    },
+    { name: "Pricing", href: "#pricing" },
+    { name: "Integrations", href: "#integration" },
+  ];
+
+  const handleFeaturesClick = (e: React.MouseEvent) => {
+    // Prevent default only if dropdown is being toggled
+    if ((e.target as HTMLElement).closest('.features-dropdown-toggle')) {
+      e.preventDefault();
+      setIsFeaturesOpen(!isFeaturesOpen);
+    }
+    // Otherwise, the link will naturally navigate to #features
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full bg-black/30 backdrop-blur-xl border-b border-white/10">
@@ -71,6 +103,68 @@ function Header() {
           <div className="w-3 h-3 rounded-full bg-purple-500 animate-pulse"></div>
           <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">Meedo</h1>
         </motion.div>
+        
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-8">
+          {navLinks.map((link, index) => (
+            <div key={index} className="relative">
+              {link.dropdown ? (
+                <div 
+                  className="flex items-center gap-1 group"
+                  onMouseEnter={() => setIsFeaturesOpen(true)}
+                  onMouseLeave={() => setIsFeaturesOpen(false)}
+                >
+                  <a 
+                    href={link.href} 
+                    className="text-slate-300 hover:text-white transition-colors"
+                    onClick={(e) => handleFeaturesClick(e)}
+                  >
+                    {link.name}
+                  </a>
+                  <button 
+                    className="features-dropdown-toggle text-slate-300 hover:text-white transition-colors"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsFeaturesOpen(!isFeaturesOpen);
+                    }}
+                  >
+                    <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
+                  </button>
+                  
+                  {isFeaturesOpen && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="absolute top-full left-0 mt-2 w-56 bg-slate-900/95 backdrop-blur-lg rounded-xl border border-white/10 shadow-lg overflow-hidden"
+                    >
+                      {link.dropdown.map((item, idx) => (
+                        <a
+                          key={idx}
+                          href={item.href}
+                          className="block px-4 py-3 text-sm hover:bg-white/5 transition-colors border-b border-white/5 last:border-b-0"
+                          onClick={() => setIsFeaturesOpen(false)}
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-purple-500"></div>
+                            {item.name}
+                          </div>
+                        </a>
+                      ))}
+                    </motion.div>
+                  )}
+                </div>
+              ) : (
+                <a 
+                  href={link.href} 
+                  className="text-slate-300 hover:text-white transition-colors"
+                >
+                  {link.name}
+                </a>
+              )}
+            </div>
+          ))}
+        </nav>
+        
         <div className="flex items-center gap-4">
           {mounted && (
             <button
@@ -97,9 +191,10 @@ function Header() {
               )}
             </button>
           )}
+          
           <motion.a 
             href="#cta" 
-            className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-cyan-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:shadow-purple-500/30 group"
+            className="hidden md:inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-cyan-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:shadow-purple-500/30 group"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ scale: 1.05 }}
@@ -108,12 +203,109 @@ function Header() {
             Get Started 
             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </motion.a>
+          
+          {/* Mobile menu button */}
+          <button 
+            className="md:hidden p-2 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            )}
+          </button>
         </div>
       </div>
+      
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <motion.div 
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          className="md:hidden bg-slate-900/95 backdrop-blur-lg border-t border-white/10"
+        >
+          <div className="container mx-auto px-4 py-4">
+            <div className="space-y-2">
+              {navLinks.map((link, index) => (
+                <div key={index}>
+                  {link.dropdown ? (
+                    <div className="py-2">
+                      <div 
+                        className="flex items-center justify-between py-2 cursor-pointer"
+                        onClick={() => setIsFeaturesOpen(!isFeaturesOpen)}
+                      >
+                        <a 
+                          href={link.href} 
+                          className="text-slate-300 hover:text-white transition-colors"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setIsMobileMenuOpen(false);
+                          }}
+                        >
+                          {link.name}
+                        </a>
+                        <ChevronDown className={`w-4 h-4 transition-transform ${isFeaturesOpen ? 'rotate-180' : ''}`} />
+                      </div>
+                      
+                      {isFeaturesOpen && (
+                        <motion.div 
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          className="pl-4 border-l border-white/10 ml-2"
+                        >
+                          {link.dropdown.map((item, idx) => (
+                            <a
+                              key={idx}
+                              href={item.href}
+                              className="block py-2 text-sm text-slate-400 hover:text-white transition-colors"
+                              onClick={() => {
+                                setIsMobileMenuOpen(false);
+                                setIsFeaturesOpen(false);
+                              }}
+                            >
+                              {item.name}
+                            </a>
+                          ))}
+                        </motion.div>
+                      )}
+                    </div>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="block py-2 text-slate-300 hover:text-white transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {link.name}
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+            
+            <div className="mt-4 pt-4 border-t border-white/10">
+              <a 
+                href="#cta" 
+                className="w-full inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-cyan-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg"
+              >
+                Get Started 
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </motion.div>
+      )}
     </header>
   );
 }
-
 function HeroSection() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -413,7 +605,7 @@ function FeatureCategoryCard({ title, icon, features }: { title: string; icon: R
               transition={{ duration: 0.3 }}
             >
               <a 
-                href="#" 
+                href="/features/multi-language" 
                 className="inline-flex items-center text-sm font-medium text-cyan-300 hover:text-cyan-200 transition-colors"
               >
                 View all features
@@ -557,54 +749,92 @@ function PricingSection() {
 
         {/* Feature Bundles and Usage Side-by-Side */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          {/* Feature Bundles Section */}
-          <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-white/10 p-6">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 rounded-lg bg-gradient-to-r from-purple-600/10 to-cyan-600/10">
-                <Zap className="w-5 h-5 text-purple-400" />
-              </div>
-              <h3 className="text-xl font-semibold text-white">Feature Bundles</h3>
-            </div>
-            
-            <div className="space-y-4">
-              {features.map((feature, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.05 }}
-                  viewport={{ once: true }}
-                  onClick={() => toggleFeature(feature.name)}
-                  className={`flex items-center justify-between p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
-                    selectedFeatures.has(feature.name) 
-                      ? 'bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border-purple-400/50 shadow-lg shadow-purple-500/10'
-                      : 'bg-slate-800/30 border-white/10 hover:border-purple-400/50'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-slate-700/50">
-                      {feature.icon}
+          {/* Left Column - Feature Bundles */}
+          <div className="space-y-8">
+            {/* Referral Discount Box */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-purple-700/40 to-cyan-700/40 rounded-2xl border border-purple-500/30 p-6"
+            >
+              <div className="flex items-start gap-4">
+                <div className="p-2 rounded-full bg-white/10">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-cyan-300">
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white mb-2">Get 100% Off Setup Cost</h3>
+                  <p className="text-slate-300">
+                    Refer just 3 friends and get your entire setup cost waived!
+                  </p>
+                  <div className="mt-4 flex items-center gap-2">
+                    <div className="flex">
+                      <div className="w-8 h-8 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center text-green-400 text-xs">1</div>
+                      <div className="w-8 h-8 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center text-green-400 text-xs -ml-2">2</div>
+                      <div className="w-8 h-8 rounded-full bg-purple-500/20 border border-purple-500/50 flex items-center justify-center text-purple-400 text-xs -ml-2">3</div>
                     </div>
-                    <span className="text-white font-medium">{feature.name}</span>
+                    <span className="text-sm text-slate-400 ml-2">Referrals needed</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className={`font-bold ${
-                      feature.free ? 'text-green-400' : 'text-white'
-                    }`}>
-                      {feature.free ? 'FREE' : `$${feature.price}`}
-                    </span>
-                    {selectedFeatures.has(feature.name) && !feature.free && (
-                      <div className="w-6 h-6 flex items-center justify-center rounded-full bg-purple-500 text-white">
-                        ✓
+                  <button className="mt-4 text-sm font-medium text-cyan-300 hover:text-cyan-200 inline-flex items-center">
+                    Learn more about referrals
+                    <ArrowRight className="ml-1 h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Feature Bundles Section */}
+            <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-white/10 p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-lg bg-gradient-to-r from-purple-600/10 to-cyan-600/10">
+                  <Zap className="w-5 h-5 text-purple-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-white">Feature Bundles</h3>
+              </div>
+              
+              <div className="space-y-4">
+                {features.map((feature, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                    viewport={{ once: true }}
+                    onClick={() => toggleFeature(feature.name)}
+                    className={`flex items-center justify-between p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
+                      selectedFeatures.has(feature.name) 
+                        ? 'bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border-purple-400/50 shadow-lg shadow-purple-500/10'
+                        : 'bg-slate-800/30 border-white/10 hover:border-purple-400/50'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-slate-700/50">
+                        {feature.icon}
                       </div>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
+                      <span className="text-white font-medium">{feature.name}</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className={`font-bold ${
+                        feature.free ? 'text-green-400' : 'text-white'
+                      }`}>
+                        {feature.free ? 'FREE' : `$${feature.price}`}
+                      </span>
+                      {selectedFeatures.has(feature.name) && !feature.free && (
+                        <div className="w-6 h-6 flex items-center justify-center rounded-full bg-purple-500 text-white">
+                          ✓
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Usage Estimation Section */}
+          {/* Right Column - Usage Estimation */}
           <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-white/10 p-6">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-2 rounded-lg bg-gradient-to-r from-purple-600/10 to-cyan-600/10">
@@ -735,14 +965,13 @@ function PricingSection() {
     </section>
   );
 }
-
 const integrations = [
   { name: "Shopify", logo: "/images/logos/shopify.jpg" },
   { name: "WooCommerce", logo: "/images/logos/woocommerce.jpg" },
   { name: "BigCommerce", logo: "/images/logos/big-commerce.jpg" },
-  { name: "Magento", logo: "/images/logos/magento.svg" },
-  { name: "Salesforce", logo: "/images/logos/salesforce.svg" },
-  { name: "Square", logo: "/images/logos/square.svg" },
+  { name: "Magento", logo: "/images/logos/magento.jpg" },
+  { name: "Salesforce", logo: "/images/logos/salesforce.jpg" },
+  { name: "Square", logo: "/images/logos/Square.jpg" },
 ];
 
 function IntegrationSection() {
@@ -773,7 +1002,7 @@ function IntegrationSection() {
   }, [isPaused]);
 
   return (
-    <section className="container mx-auto px-4 py-24">
+    <section className="container mx-auto px-4 py-24" id="integration">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
