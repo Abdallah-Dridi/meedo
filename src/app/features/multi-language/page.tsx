@@ -28,7 +28,7 @@ const fadeIn = {
     y: 0, 
     transition: { 
       duration: 0.8, 
-      ease: [0.42, 0, 0.58, 1] as any
+      ease: [0.42, 0, 0.58, 1] as [number, number, number, number]
     } 
   },
 };
@@ -271,7 +271,7 @@ function WhatItDoesSection() {
           Global support, no overhead.
         </h2>
         <p className="text-lg text-slate-400 mb-12">
-          Provide exceptional customer service in any language. Meedo's AI-powered support tool offers full multilingual support, enabling eCommerce and global brands to respond fluently to customers worldwide—without hiring multi-language agents or using third-party translation software.
+          Provide exceptional customer service in any language. Meedo&apos;s AI-powered support tool offers full multilingual support, enabling eCommerce and global brands to respond fluently to customers worldwide—without hiring multi-language agents or using third-party translation software.
         </p>
         {/* Supporting Visual Placeholder */}
         <div className="flex justify-center my-12">
@@ -513,9 +513,9 @@ className="max-w-3xl mx-auto text-center"
 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 mb-6">
 <Star className="w-8 h-8 text-white" />
 </div>
-<blockquote className="text-xl md:text-2xl italic text-white mb-6">
-"Meedo&apos;s multilingual AI has been a game-changer. We&apos;ve expanded into three new European markets, and customer satisfaction scores in those regions are now on par with our domestic market. We didn&apos;t need to hire a single translator."
-</blockquote>
+      <blockquote className="text-xl md:text-2xl italic text-white mb-6">
+&quot;Meedo&apos;s multilingual AI has been a game-changer. We&apos;ve expanded into three new European markets, and customer satisfaction scores in those regions are now on par with our domestic market. We didn&apos;t need to hire a single translator.&quot;
+      </blockquote>
 <p className="text-slate-400">
 — Sarah J., Head of Global Customer Success, GreenGlow Beauty
 </p>
@@ -566,10 +566,10 @@ className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple-90
 >
 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(139,92,246,0.2),transparent_70%)]"></div>
 <div className="relative z-10">
-<h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-Break the Language Barrier.
-<span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent"> Delight Every Customer.</span>
-</h2>
+      <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+        Break the Language Barrier.
+        <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent"> Delight Every Customer.</span>
+      </h2>
 <p className="text-slate-300 max-w-2xl mx-auto mb-8 text-lg">
 Offer world-class support in every language your customers speak. Start building stronger global relationships today.
 </p>
