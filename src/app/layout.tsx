@@ -1,10 +1,11 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"; // Import the provider
 
-const inter = Inter({ subsets: ["latin"] });
+
+// Removing the unused 'inter' variable to fix ESLint warning
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Meedo",
