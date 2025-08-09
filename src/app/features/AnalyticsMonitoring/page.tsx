@@ -1,4 +1,3 @@
-// src/app/features/SocialMedia/page.tsx
 "use client";
 
 import React, { useState } from 'react';
@@ -17,6 +16,23 @@ import {
   Download,
   ThumbsUp,
   ThumbsDown} from 'lucide-react';
+import { 
+  LineChart, 
+  Line, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer, 
+  PieChart, 
+  Pie, 
+  Cell, 
+  BarChart, 
+  Bar,
+  ComposedChart,
+  Area,
+  AreaChart
+} from 'recharts';
 
 // Animation variants
 const fadeIn = {
@@ -65,288 +81,446 @@ function FeatureCard({ icon, title, description, example, keywords }: { icon: Re
   );
 }
 
-// Analytics Dashboard Component
 function AnalyticsDashboard() {
-  const [activeTab, setActiveTab] = useState('satisfaction');
-
-  const satisfactionData = [
-    { month: 'Jan', score: 4.2 },
-    { month: 'Feb', score: 4.3 },
-    { month: 'Mar', score: 4.1 },
-    { month: 'Apr', score: 4.5 },
-    { month: 'May', score: 4.6 },
-    { month: 'Jun', score: 4.8 }
+  const summaryStats = [
+    { label: "Total Interactions", value: "3.6M", change: "+9.1%" },
+    { label: "Automated Resolutions", value: "14.0K", change: "+59.8%" },
+    { label: "Unique Users Helped", value: "13.6K", change: "+60%" },
+    { label: "Avg. Daily Reach", value: "5.2K", change: "+7.8%" },
+    { label: "Automation Savings", value: "$13.69K", change: "+4.9%" },
   ];
 
-  const automationMetrics = [
-    { name: 'FAQ Bot', success: 94, failures: 6 },
-    { name: 'Payment Automation', success: 89, failures: 11 },
-    { name: 'Order Status', success: 97, failures: 3 },
-    { name: 'Return Process', success: 86, failures: 14 }
+  const spendData = [
+    { date: "Jul 10", amount: 200, tickets: 150, cost: 0.85 },
+    { date: "Jul 15", amount: 350, tickets: 280, cost: 0.92 },
+    { date: "Jul 20", amount: 280, tickets: 220, cost: 0.78 },
+    { date: "Jul 25", amount: 400, tickets: 350, cost: 0.88 },
+    { date: "Jul 30", amount: 450, tickets: 380, cost: 0.95 },
+    { date: "Aug 4", amount: 500, tickets: 420, cost: 0.82 },
+    { date: "Aug 9", amount: 470, tickets: 400, cost: 0.79 },
+  ];
+
+  const workflowPerformance = [
+    {
+      name: "Order Tracking",
+      saved: "$4,230",
+      tickets: "5,120",
+      avgTime: "1.3s",
+      resolution: "98%",
+      deflection: "87%",
+      costPerTicket: "$0.84",
+    },
+    {
+      name: "Return Processing",
+      saved: "$2,310",
+      tickets: "3,430",
+      avgTime: "2.1s",
+      resolution: "92%",
+      deflection: "81%",
+      costPerTicket: "$1.05",
+    },
+    {
+      name: "FAQ Bot",
+      saved: "$1,890",
+      tickets: "2,210",
+      avgTime: "0.9s",
+      resolution: "95%",
+      deflection: "85%",
+      costPerTicket: "$0.76",
+    },
+  ];
+
+  const demographics = [
+    { age: "18-24", gender: "Female", resolutions: 4200 },
+    { age: "25-34", gender: "Male", resolutions: 3800 },
+    { age: "35-44", gender: "Female", resolutions: 3100 },
+  ];
+
+  const deviceData = [
+    { name: "Desktop", value: 45, color: "#8b5cf6" },
+    { name: "Mobile", value: 40, color: "#06b6d4" },
+    { name: "Tablet", value: 15, color: "#facc15" },
+  ];
+
+  const countryData = [
+    { country: "United States", resolutions: 5200, color: "#8b5cf6" },
+    { country: "Canada", resolutions: 2100, color: "#06b6d4" },
+    { country: "United Kingdom", resolutions: 1800, color: "#10b981" },
+    { country: "Australia", resolutions: 1200, color: "#f59e0b" },
+    { country: "Germany", resolutions: 900, color: "#ef4444" },
+  ];
+
+  const satisfactionData = [
+    { date: "Jul 10", csat: 84 },
+    { date: "Jul 15", csat: 86 },
+    { date: "Jul 20", csat: 88 },
+    { date: "Jul 25", csat: 87 },
+    { date: "Jul 30", csat: 89 },
+    { date: "Aug 4", csat: 91 },
+    { date: "Aug 9", csat: 93 },
+  ];
+
+  const aiMetrics = [
+    { category: "Order Inquiries", rate: 96, color: "#10b981" },
+    { category: "Return Requests", rate: 94, color: "#8b5cf6" },
+    { category: "Product Info", rate: 98, color: "#06b6d4" },
+    { category: "Billing Support", rate: 89, color: "#f59e0b" },
+    { category: "Technical Issues", rate: 92, color: "#ef4444" },
+  ];
+
+  const ticketHandlingData = [
+    { date: "Jul 10", tickets: 150, avgTime: 2.3 },
+    { date: "Jul 15", tickets: 280, avgTime: 1.8 },
+    { date: "Jul 20", tickets: 220, avgTime: 2.1 },
+    { date: "Jul 25", tickets: 350, avgTime: 1.6 },
+    { date: "Jul 30", tickets: 380, avgTime: 1.9 },
+    { date: "Aug 4", tickets: 420, avgTime: 1.4 },
+    { date: "Aug 9", tickets: 400, avgTime: 1.2 },
+  ];
+
+  const automationCostData = [
+    { date: "Jul 10", automations: 125, costPerTicket: 0.85 },
+    { date: "Jul 15", automations: 245, costPerTicket: 0.72 },
+    { date: "Jul 20", automations: 198, costPerTicket: 0.78 },
+    { date: "Jul 25", automations: 312, costPerTicket: 0.65 },
+    { date: "Jul 30", automations: 356, costPerTicket: 0.68 },
+    { date: "Aug 4", automations: 398, costPerTicket: 0.58 },
+    { date: "Aug 9", automations: 385, costPerTicket: 0.62 },
   ];
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-white/10 overflow-hidden"
+      className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-white/10 overflow-hidden p-6 space-y-8"
     >
-      {/* Dashboard Header */}
-      <div className="p-6 border-b border-white/10 bg-slate-800/30">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              <BarChart3 className="w-5 h-5 text-purple-400" />
-              Analytics Dashboard
-            </h3>
-            <p className="text-slate-400 text-sm mt-1">Real-time insights & performance monitoring</p>
+      {/* Top Summary Metrics */}
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        {summaryStats.map((stat, idx) => (
+          <div key={idx} className="bg-slate-800/30 p-4 rounded-lg border border-white/5">
+            <p className="text-slate-400 text-sm">{stat.label}</p>
+            <p className="text-white text-xl font-bold">{stat.value}</p>
+            <p className="text-green-400 text-xs">{stat.change}</p>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 px-3 py-1 bg-green-500/10 border border-green-500/30 rounded-full">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <span className="text-green-400 text-xs font-medium">Live</span>
-            </div>
-            <button className="flex items-center gap-2 px-3 py-1.5 text-xs text-slate-400 hover:text-white bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors">
-              <Download className="w-3 h-3" />
-              Export
-            </button>
-          </div>
-        </div>
-        
-        {/* Tab Navigation */}
-        <div className="flex gap-1 mt-4 bg-slate-700/30 rounded-lg p-1">
-          <button
-            onClick={() => setActiveTab('satisfaction')}
-            className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all ${
-              activeTab === 'satisfaction'
-                ? 'bg-gradient-to-r from-purple-600 to-cyan-600 text-white shadow-lg'
-                : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            Satisfaction Analytics
-          </button>
-          <button
-            onClick={() => setActiveTab('automation')}
-            className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all ${
-              activeTab === 'automation'
-                ? 'bg-gradient-to-r from-purple-600 to-cyan-600 text-white shadow-lg'
-                : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            AI Performance
-          </button>
+        ))}
+      </div>
+
+      {/* Automation Load Over Time */}
+      <div>
+        <h4 className="text-white font-semibold mb-4">Automation Load Over Time</h4>
+        <div className="bg-slate-800/30 rounded-lg border border-white/5 p-4">
+          <ResponsiveContainer width="100%" height={200}>
+            <AreaChart data={spendData}>
+              <defs>
+                <linearGradient id="automationGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis 
+                dataKey="date" 
+                stroke="#9ca3af"
+                fontSize={12}
+              />
+              <YAxis 
+                stroke="#9ca3af"
+                fontSize={12}
+              />
+              <Tooltip 
+                contentStyle={{
+                  backgroundColor: '#1f2937',
+                  border: '1px solid #374151',
+                  borderRadius: '8px',
+                  color: '#f9fafb'
+                }}
+              />
+              <Area
+                type="monotone"
+                dataKey="amount"
+                stroke="#8b5cf6"
+                strokeWidth={2}
+                fillOpacity={1}
+                fill="url(#automationGradient)"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
         </div>
       </div>
 
-      {/* Dashboard Content */}
-      <div className="p-6">
-        {activeTab === 'satisfaction' && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* CSAT Trend */}
-            <div className="lg:col-span-2 bg-slate-800/30 rounded-xl p-4 border border-white/5">
-              <div className="flex items-center justify-between mb-4">
-                <h4 className="text-white font-semibold">Customer Satisfaction Trends</h4>
-                <div className="flex items-center gap-1 text-green-400 text-sm">
-                  <TrendingUp className="w-4 h-4" />
-                  ↑ 8% from last month
-                </div>
-              </div>
-              <div className="h-32 flex items-end justify-between gap-2">
-                {satisfactionData.map((item, idx) => (
-                  <div key={idx} className="flex flex-col items-center gap-2 flex-1">
-                    <div 
-                      className="w-full bg-gradient-to-t from-purple-500 to-cyan-500 rounded-t"
-                      style={{ height: `${(item.score / 5) * 100}%` }}
-                    ></div>
-                    <span className="text-xs text-slate-400">{item.month}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 text-center">
-                <span className="text-2xl font-bold text-white">4.8</span>
-                <span className="text-slate-400 text-sm ml-1">/5.0 Current CSAT</span>
-              </div>
-            </div>
+      {/* Workflow Performance Table */}
+      <div>
+        <h4 className="text-white font-semibold mb-2">Workflow Performance</h4>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left text-slate-400 border border-white/5 rounded-lg">
+            <thead className="bg-slate-800/50 text-slate-300">
+              <tr>
+                <th className="p-2">Workflow</th>
+                <th className="p-2">Amount Saved</th>
+                <th className="p-2">Tickets</th>
+                <th className="p-2">Avg Time</th>
+                <th className="p-2">Resolution Rate</th>
+                <th className="p-2">Deflection Rate</th>
+                <th className="p-2">Cost/Ticket</th>
+              </tr>
+            </thead>
+            <tbody>
+              {workflowPerformance.map((row, idx) => (
+                <tr key={idx} className="border-t border-white/5">
+                  <td className="p-2 text-white">{row.name}</td>
+                  <td className="p-2">{row.saved}</td>
+                  <td className="p-2">{row.tickets}</td>
+                  <td className="p-2">{row.avgTime}</td>
+                  <td className="p-2">{row.resolution}</td>
+                  <td className="p-2">{row.deflection}</td>
+                  <td className="p-2">{row.costPerTicket}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-            {/* Sentiment Analysis */}
-            <div className="bg-slate-800/30 rounded-xl p-4 border border-white/5">
-              <h4 className="text-white font-semibold mb-4">Sentiment Breakdown</h4>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <ThumbsUp className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300 text-sm">Positive</span>
-                  </div>
-                  <span className="text-green-400 font-semibold">78%</span>
-                </div>
-                <div className="w-full bg-slate-700/50 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-green-500 to-green-400 h-2 rounded-full" style={{ width: '78%' }}></div>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-yellow-400 rounded-full"></div>
-                    <span className="text-slate-300 text-sm">Neutral</span>
-                  </div>
-                  <span className="text-yellow-400 font-semibold">15%</span>
-                </div>
-                <div className="w-full bg-slate-700/50 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 h-2 rounded-full" style={{ width: '15%' }}></div>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <ThumbsDown className="w-4 h-4 text-red-400" />
-                    <span className="text-slate-300 text-sm">Negative</span>
-                  </div>
-                  <span className="text-red-400 font-semibold">7%</span>
-                </div>
-                <div className="w-full bg-slate-700/50 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-red-500 to-red-400 h-2 rounded-full" style={{ width: '7%' }}></div>
-                </div>
-              </div>
-            </div>
+      {/* Resolutions by Demographics and Device Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
+          <h4 className="text-white font-semibold mb-2">Resolutions by Demographics</h4>
+          <table className="w-full text-sm text-left text-slate-400 border border-white/5 rounded-lg">
+            <thead className="bg-slate-800/50 text-slate-300">
+              <tr>
+                <th className="p-2">Age Group</th>
+                <th className="p-2">Gender</th>
+                <th className="p-2">Resolutions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {demographics.map((row, idx) => (
+                <tr key={idx} className="border-t border-white/5">
+                  <td className="p-2">{row.age}</td>
+                  <td className="p-2">{row.gender}</td>
+                  <td className="p-2">{row.resolutions}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-            {/* Feedback Highlights */}
-            <div className="lg:col-span-3 bg-slate-800/30 rounded-xl p-4 border border-white/5">
-              <h4 className="text-white font-semibold mb-4">Recent Feedback Highlights</h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="flex items-center gap-3 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
-                  <Star className="w-5 h-5 text-green-400" />
-                  <div>
-                    <p className="text-green-300 text-sm font-medium">&quot;Super fast response&quot;</p>
-                    <p className="text-slate-400 text-xs">Resolution in 2 minutes</p>
+        {/* Device Distribution Pie Chart */}
+        <div>
+          <h4 className="text-white font-semibold mb-4">Resolutions by Device</h4>
+          <div className="bg-slate-800/30 rounded-lg border border-white/5 p-4">
+            <ResponsiveContainer width="100%" height={200}>
+              <PieChart>
+                <Pie
+                  data={deviceData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={40}
+                  outerRadius={80}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {deviceData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip 
+                  contentStyle={{
+                    backgroundColor: '#1f2937',
+                    border: '1px solid #374151',
+                    borderRadius: '8px',
+                    color: '#f9fafb'
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="flex justify-center gap-4 mt-2 text-xs text-slate-400">
+              {deviceData.map((d, i) => (
+                <div key={i} className="flex items-center gap-1">
+                  <span className="w-3 h-3 rounded-full" style={{ backgroundColor: d.color }}></span>
+                  {d.name} ({d.value}%)
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* AI Performance & Satisfaction Metrics */}
+      <div>
+        <h4 className="text-white font-semibold mb-4">AI Performance & Customer Satisfaction</h4>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Customer Satisfaction Trends */}
+          <div className="bg-slate-800/30 rounded-lg border border-white/5 p-4">
+            <h5 className="text-slate-300 text-sm mb-3">Customer Satisfaction Score (CSAT)</h5>
+            <ResponsiveContainer width="100%" height={180}>
+              <AreaChart data={satisfactionData}>
+                <defs>
+                  <linearGradient id="satisfactionGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="date" stroke="#9ca3af" fontSize={10} />
+                <YAxis 
+                  domain={[60, 100]} 
+                  stroke="#9ca3af" 
+                  fontSize={10}
+                  tickFormatter={(value) => `${value}%`}
+                />
+                <Tooltip 
+                  contentStyle={{
+                    backgroundColor: '#1f2937',
+                    border: '1px solid #374151',
+                    borderRadius: '8px',
+                    color: '#f9fafb'
+                  }}
+                  formatter={(value) => [`${value}%`, 'CSAT Score']}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="csat"
+                  stroke="#10b981"
+                  strokeWidth={2}
+                  fillOpacity={1}
+                  fill="url(#satisfactionGradient)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+            <div className="mt-2 flex items-center justify-between text-xs">
+              <span className="text-slate-400">Avg: 87.2%</span>
+              <span className="text-green-400">↗ +5.8% this month</span>
+            </div>
+          </div>
+          
+          {/* AI Resolution Success Rate */}
+          <div className="bg-slate-800/30 rounded-lg border border-white/5 p-4">
+            <h5 className="text-slate-300 text-sm mb-3">AI Resolution Success Rate</h5>
+            <div className="space-y-4">
+              {aiMetrics.map((metric, idx) => (
+                <div key={idx} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-300 text-sm">{metric.category}</span>
+                    <span className="text-white font-semibold">{metric.rate}%</span>
+                  </div>
+                  <div className="w-full bg-slate-700 rounded-full h-2">
+                    <motion.div
+                      className="h-2 rounded-full"
+                      style={{ 
+                        background: `linear-gradient(90deg, ${metric.color}, ${metric.color}90)`,
+                        width: `${metric.rate}%`
+                      }}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${metric.rate}%` }}
+                      transition={{ duration: 1, delay: idx * 0.2 }}
+                    />
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
-                  <Star className="w-5 h-5 text-green-400" />
-                  <div>
-                    <p className="text-green-300 text-sm font-medium">&quot;Very helpful AI&quot;</p>
-                    <p className="text-slate-400 text-xs">Order tracking query</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
-                  <AlertTriangle className="w-5 h-5 text-yellow-400" />
-                  <div>
-                    <p className="text-yellow-300 text-sm font-medium">&quot;Could be clearer&quot;</p>
-                    <p className="text-slate-400 text-xs">Return policy question</p>
-                  </div>
+              ))}
+              <div className="mt-4 pt-3 border-t border-white/10">
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400 text-xs">Overall AI Performance</span>
+                  <span className="text-cyan-400 font-semibold">94.3%</span>
                 </div>
               </div>
             </div>
           </div>
-        )}
-
-        {activeTab === 'automation' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Success Rate Gauge */}
-            <div className="bg-slate-800/30 rounded-xl p-4 border border-white/5">
-              <h4 className="text-white font-semibold mb-4">Overall Success Rate</h4>
-              <div className="relative w-32 h-32 mx-auto mb-4">
-                <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 36 36">
-                  <path
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                    fill="none"
-                    stroke="rgb(51, 65, 85)"
-                    strokeWidth="2"
-                  />
-                  <path
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                    fill="none"
-                    stroke="url(#gradient)"
-                    strokeWidth="2"
-                    strokeDasharray="91.2, 100"
-                  />
-                  <defs>
-                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#8b5cf6" />
-                      <stop offset="100%" stopColor="#06b6d4" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-white">91%</span>
-                </div>
-              </div>
-              <p className="text-center text-slate-400 text-sm">Automation handled successfully</p>
-              <div className="mt-4 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
-                <p className="text-green-400 text-xs font-medium">↑ 3% improvement from last week</p>
-              </div>
+        </div>
+        
+        {/* Performance Insights Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          <div className="bg-slate-800/30 rounded-lg border border-white/5 p-4 text-center">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-green-500/20 mb-3 mx-auto">
+              <TrendingUp className="w-5 h-5 text-green-400" />
             </div>
-
-            {/* Processing Time */}
-            <div className="bg-slate-800/30 rounded-xl p-4 border border-white/5">
-              <h4 className="text-white font-semibold mb-4">Average Response Time</h4>
-              <div className="text-center mb-4">
-                <span className="text-3xl font-bold text-white">1.2</span>
-                <span className="text-slate-400 text-lg ml-1">seconds</span>
-              </div>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-slate-300 text-sm">AI Response</span>
-                  <span className="text-cyan-400 font-semibold">1.2s</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-slate-300 text-sm">Human Handoff</span>
-                  <span className="text-slate-400 font-semibold">23s</span>
-                </div>
-              </div>
-              <div className="mt-4 p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-lg">
-                <p className="text-cyan-400 text-xs font-medium">23% faster than industry average</p>
-              </div>
-            </div>
-
-            {/* Workflow Performance */}
-            <div className="lg:col-span-2 bg-slate-800/30 rounded-xl p-4 border border-white/5">
-              <h4 className="text-white font-semibold mb-4">Workflow Performance</h4>
-              <div className="space-y-3">
-                {automationMetrics.map((metric, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-3 h-3 rounded-full ${metric.success > 90 ? 'bg-green-400' : metric.success > 85 ? 'bg-yellow-400' : 'bg-red-400'}`}></div>
-                      <span className="text-slate-300">{metric.name}</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="text-right">
-                        <p className="text-green-400 text-sm font-semibold">{metric.success}% success</p>
-                        <p className="text-red-400 text-xs">{metric.failures}% failed</p>
-                      </div>
-                      <div className="w-16 bg-slate-700/50 rounded-full h-2">
-                        <div 
-                          className="bg-gradient-to-r from-green-500 to-green-400 h-2 rounded-full"
-                          style={{ width: `${metric.success}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Cost Savings */}
-            <div className="lg:col-span-2 bg-slate-800/30 rounded-xl p-4 border border-white/5">
-              <h4 className="text-white font-semibold mb-4">Cost Savings & ROI</h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="text-center p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
-                  <p className="text-green-400 text-2xl font-bold">$12,450</p>
-                  <p className="text-slate-400 text-sm">Monthly Savings</p>
-                </div>
-                <div className="text-center p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg">
-                  <p className="text-purple-400 text-2xl font-bold">2,341</p>
-                  <p className="text-slate-400 text-sm">Tickets Automated</p>
-                </div>
-                <div className="text-center p-4 bg-cyan-500/10 border border-cyan-500/20 rounded-lg">
-                  <p className="text-cyan-400 text-2xl font-bold">87%</p>
-                  <p className="text-slate-400 text-sm">Deflection Rate</p>
-                </div>
-              </div>
-            </div>
+            <p className="text-white text-lg font-bold">23%</p>
+            <p className="text-slate-400 text-xs">Faster Resolution Time</p>
           </div>
-        )}
+          <div className="bg-slate-800/30 rounded-lg border border-white/5 p-4 text-center">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-purple-500/20 mb-3 mx-auto">
+              <Users className="w-5 h-5 text-purple-400" />
+            </div>
+            <p className="text-white text-lg font-bold">89%</p>
+            <p className="text-slate-400 text-xs">Customer Retention</p>
+          </div>
+          <div className="bg-slate-800/30 rounded-lg border border-white/5 p-4 text-center">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-cyan-500/20 mb-3 mx-auto">
+              <Brain className="w-5 h-5 text-cyan-400" />
+            </div>
+            <p className="text-white text-lg font-bold">96%</p>
+            <p className="text-slate-400 text-xs">AI Accuracy Score</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Trend Graphs */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
+          <h4 className="text-white font-semibold mb-4">Tickets & Avg Handling Time</h4>
+          <div className="bg-slate-800/30 rounded-lg border border-white/5 p-4">
+            <ResponsiveContainer width="100%" height={200}>
+              <ComposedChart data={ticketHandlingData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="date" stroke="#9ca3af" fontSize={12} />
+                <YAxis yAxisId="left" stroke="#9ca3af" fontSize={12} />
+                <YAxis yAxisId="right" orientation="right" stroke="#9ca3af" fontSize={12} />
+                <Tooltip 
+                  contentStyle={{
+                    backgroundColor: '#1f2937',
+                    border: '1px solid #374151',
+                    borderRadius: '8px',
+                    color: '#f9fafb'
+                  }}
+                />
+                <Bar yAxisId="left" dataKey="tickets" fill="#06b6d4" name="Tickets" />
+                <Line 
+                  yAxisId="right" 
+                  type="monotone" 
+                  dataKey="avgTime" 
+                  stroke="#f59e0b" 
+                  strokeWidth={2}
+                  name="Avg Time (min)"
+                />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+        <div>
+          <h4 className="text-white font-semibold mb-4">Automations & Cost per Ticket</h4>
+          <div className="bg-slate-800/30 rounded-lg border border-white/5 p-4">
+            <ResponsiveContainer width="100%" height={200}>
+              <ComposedChart data={automationCostData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="date" stroke="#9ca3af" fontSize={12} />
+                <YAxis yAxisId="left" stroke="#9ca3af" fontSize={12} />
+                <YAxis yAxisId="right" orientation="right" stroke="#9ca3af" fontSize={12} />
+                <Tooltip 
+                  contentStyle={{
+                    backgroundColor: '#1f2937',
+                    border: '1px solid #374151',
+                    borderRadius: '8px',
+                    color: '#f9fafb'
+                  }}
+                />
+                <Bar yAxisId="left" dataKey="automations" fill="#10b981" name="Automations" />
+                <Line 
+                  yAxisId="right" 
+                  type="monotone" 
+                  dataKey="costPerTicket" 
+                  stroke="#ef4444" 
+                  strokeWidth={2}
+                  name="Cost per Ticket ($)"
+                />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
     </motion.div>
   );
 }
+
 
 function AnalyticsMonitoringPage() {
   return (
@@ -373,6 +547,7 @@ function AnalyticsMonitoringPage() {
 }
 
 import Header from '@/components/Header';
+
 function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
@@ -648,5 +823,7 @@ function CallToAction() {
   );
 }
 
+// Mock Footer Component
 import Footer from '@/components/Footer';
+
 export default AnalyticsMonitoringPage;
