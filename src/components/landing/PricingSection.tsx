@@ -36,19 +36,15 @@ export function PricingSection() {
   // Feature definitions
   const features = [
     {
+      name: "Personalization & Intelligence",
+      price: 0,
+      icon: <User className="h-5 w-5 text-yellow-400" />,
+      free: true,
+    },
+    {
       name: "Core Communication & Language Support",
       price: 59,
       icon: <MessageSquare className="h-5 w-5 text-cyan-400" />,
-    },
-    {
-      name: "Order Management & Processing",
-      price: 69,
-      icon: <Package className="h-5 w-5 text-purple-400" />,
-    },
-    {
-      name: "Social Media Management",
-      price: 59,
-      icon: <ShoppingBag className="h-5 w-5 text-pink-400" />,
     },
     {
       name: "Analytics & Monitoring",
@@ -56,11 +52,16 @@ export function PricingSection() {
       icon: <BarChart3 className="h-5 w-5 text-green-400" />,
     },
     {
-      name: "Personalization & Intelligence",
-      price: 0,
-      icon: <User className="h-5 w-5 text-yellow-400" />,
-      free: true,
+      name: "Social Media Management",
+      price: 59,
+      icon: <ShoppingBag className="h-5 w-5 text-pink-400" />,
     },
+    {
+      name: "Order Management & Processing",
+      price: 69,
+      icon: <Package className="h-5 w-5 text-purple-400" />,
+    },
+
   ];
 
   // Case types definitions
@@ -107,21 +108,12 @@ export function PricingSection() {
     });
   };
 
-  // Update usage data with custom stepping
+  // Simplified usage update function
   const updateUsage = (
     caseKey: string,
     field: "volume" | "period",
     value: number | string
   ) => {
-    if (field === "volume" && typeof value === "number") {
-      // Custom stepping logic: 1 until 50, then 5 from 55 to 1000
-      if (value > 50 && value < 55) {
-        value = 55;
-      } else if (value >= 55 && value % 5 !== 0) {
-        value = Math.round(value / 5) * 5;
-      }
-    }
-
     setUsageData((prev) => ({
       ...prev,
       [caseKey]: {
@@ -130,6 +122,25 @@ export function PricingSection() {
       },
     }));
   };
+
+  // Helper function to convert the slider's internal value (0-100) to the display value (0-300)
+  const internalToDisplayValue = (internalValue: number): number => {
+    if (internalValue <= 50) {
+      return internalValue; // 1-to-1 mapping for the first half
+    }
+    // For the second half, each point on the slider represents 5 tickets
+    return 50 + (internalValue - 50) * 5;
+  };
+
+  // Helper function to convert the display value (0-300) back to the slider's internal value (0-100)
+  const displayToInternalValue = (displayValue: number): number => {
+    if (displayValue <= 50) {
+      return displayValue; // 1-to-1 mapping
+    }
+    // Reverse the calculation for values above 50
+    return 50 + (displayValue - 50) / 5;
+  };
+
 
   // Calculate setup cost with discounts
   const calculateSetupCost = () => {
@@ -272,9 +283,9 @@ export function PricingSection() {
               </div>
             </motion.div>
 
-            {/* Feature Bundles Section */}
-            <div className="flex-1 rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800/50 to-slate-900/50 p-6">
-              <div className="mb-6 flex items-center gap-3">
+            {/* Feature Bundles Section - MODIFIED */}
+            <div className="flex flex-1 flex-col rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800/50 to-slate-900/50 p-6">
+              <div className="mb-6 mt-4 flex items-center gap-3">
                 <div className="rounded-lg bg-gradient-to-r from-purple-600/10 to-cyan-600/10 p-2">
                   <Zap className="h-5 w-5 text-purple-400" />
                 </div>
@@ -282,8 +293,9 @@ export function PricingSection() {
                   Feature Bundles
                 </h3>
               </div>
-
-              <div className="space-y-4">
+                
+              {/* MODIFIED */}
+              <div className="flex flex-1 flex-col justify-center gap-10">
                 {features.map((feature, idx) => (
                   <motion.div
                     key={idx}
@@ -378,41 +390,43 @@ export function PricingSection() {
                       </div>
                     </div>
 
-                    {/* Range input for volume with custom stepping */}
+                    {/* MODIFIED: Range input section */}
                     <div className="space-y-2">
-                      <input
-                        type="range"
-                        min="0"
-                        max="1000"
-                        value={
-                          usageData[caseType.key as keyof typeof usageData]
-                            .volume || 0
-                        }
-                        onChange={(e) =>
-                          updateUsage(
-                            caseType.key,
-                            "volume",
-                            parseInt(e.target.value) || 0
-                          )
-                        }
-                        className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-slate-700 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-purple-500"
-                      />
-                      <div className="relative flex justify-between text-xs text-slate-400">
-                        <span>0</span>
-                        <span className="absolute left-1/4 -translate-x-1/2">25</span>
-                        <span className="absolute left-1/2 -translate-x-1/2">50</span>
-                        <span className="absolute left-3/4 -translate-x-1/2">75</span>
-                        <span>1000</span>
-                      </div>
-                      <div className="flex justify-center mt-1">
-                        <span className="text-sm text-slate-400">
-                          {
-                            usageData[caseType.key as keyof typeof usageData]
-                              .volume
-                          }{" "}
-                          cases
-                        </span>
-                      </div>
+                        <input
+                            type="range"
+                            min="0"
+                            max="100"
+                            value={displayToInternalValue(
+                                usageData[caseType.key as keyof typeof usageData]
+                                .volume || 0
+                            )}
+                            onChange={(e) => {
+                                const internalValue = parseInt(e.target.value, 10);
+                                const displayValue = internalToDisplayValue(internalValue);
+                                updateUsage(
+                                    caseType.key,
+                                    "volume",
+                                    displayValue
+                                );
+                            }}
+                            className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-slate-700 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-purple-500"
+                        />
+                        <div className="relative flex justify-between text-xs text-slate-400">
+                            <span>0</span>
+                            <span className="absolute left-1/4 -translate-x-1/2">25</span>
+                            <span className="absolute left-1/2 -translate-x-1/2">50</span>
+                            <span className="absolute left-3/4 -translate-x-1/2">175</span>
+                            <span>300</span>
+                        </div>
+                        <div className="flex justify-center mt-1">
+                            <span className="text-sm text-slate-400">
+                            {
+                                usageData[caseType.key as keyof typeof usageData]
+                                .volume
+                            }{" "}
+                            cases
+                            </span>
+                        </div>
                     </div>
                   </div>
                 </motion.div>

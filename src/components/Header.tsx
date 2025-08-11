@@ -21,11 +21,11 @@ export default function Header() {
       name: "Features",
       href: "/#features",
       dropdown: [
-        { name: "Analytics Monitoring", href: "/features/AnalyticsMonitoring" },
-        { name: "Order Management", href: "/features/OrderManagement" },
-        { name: "Social Media", href: "/features/SocialMedia" },
         { name: "Personalization Intelligence", href: "/features/PersonalizationIntelligence" },
         { name: "Multi-language", href: "/features/multi-language" },
+        { name: "Analytics Monitoring", href: "/features/AnalyticsMonitoring" },
+        { name: "Social Media", href: "/features/SocialMedia" },
+        { name: "Order Management", href: "/features/OrderManagement" },
       ]
     },
     { name: "Pricing", href: "/#pricing" },

@@ -1,12 +1,13 @@
 // src/components/ReferralPage.tsx
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, ChevronLeft, Gift, User, Mail, Check } from 'lucide-react';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ParticlesBackground } from '@/components/ParticlesBackground';
+
 const ReferralPage = () => {
   const [step, setStep] = useState(0);
   const [referrals, setReferrals] = useState([
@@ -15,6 +16,21 @@ const ReferralPage = () => {
     { name: '', email: '' }
   ]);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formError, setFormError] = useState('');
+
+  useEffect(() => {
+    // Get all non-empty, trimmed emails
+    const emails = referrals
+      .map(ref => ref.email.trim())
+      .filter(email => email !== '');
+
+    // Check if the Set of unique emails has a different size than the array of emails
+    if (new Set(emails).size !== emails.length) {
+      setFormError('Duplicate emails found. Please provide a unique email for each friend.');
+    } else {
+      setFormError(''); // Clear error if no duplicates
+    }
+  }, [referrals]); // This effect runs whenever the referrals state changes
 
   const handleChange = (index: number, field: string, value: string) => {
     const updatedReferrals = [...referrals];
@@ -24,13 +40,14 @@ const ReferralPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (formError) return; // Prevent submission if there's an error
     // Simulate form submission
     setTimeout(() => {
       setIsSubmitted(true);
     }, 1500);
   };
 
-  const isValidForm = referrals.every(ref => ref.name.trim() && ref.email.trim());
+  const isValidForm = referrals.every(ref => ref.name.trim() && ref.email.trim()) && !formError;
 
   return (
     <div className="bg-white dark:bg-gradient-to-br dark:from-black dark:to-slate-900 text-slate-200 min-h-screen font-sans antialiased overflow-x-hidden">
@@ -117,13 +134,19 @@ const ReferralPage = () => {
                       />
                     </div>
                   </div>
+                  
+                  {formError && (
+                    <div className="mt-6 text-center text-red-400 text-sm">
+                      {formError}
+                    </div>
+                  )}
 
-                  <div className="flex justify-between mt-10">
+                  <div className="flex justify-between mt-4">
                     <button
                       type="button"
                       onClick={() => setStep(prev => Math.max(0, prev - 1))}
                       disabled={step === 0}
-                      className={`flex items-center px-5 py-2.5 rounded-lg ${step === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-slate-800/50'}`}
+                      className={`flex items-center px-5 py-2.5 rounded-lg transition-colors ${step === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-slate-800/50'}`}
                     >
                       <ChevronLeft className="w-4 h-4 mr-1" />
                       Previous
@@ -134,7 +157,7 @@ const ReferralPage = () => {
                         type="button"
                         onClick={() => setStep(prev => prev + 1)}
                         disabled={!referrals[step].name.trim() || !referrals[step].email.trim()}
-                        className={`flex items-center px-6 py-2.5 rounded-lg font-medium ${
+                        className={`flex items-center px-6 py-2.5 rounded-lg font-medium transition-opacity ${
                           referrals[step].name.trim() && referrals[step].email.trim()
                             ? 'bg-gradient-to-r from-purple-600 to-cyan-600 hover:opacity-90'
                             : 'bg-slate-800/50 opacity-70 cursor-not-allowed'
@@ -147,7 +170,7 @@ const ReferralPage = () => {
                       <motion.button
                         type="submit"
                         disabled={!isValidForm}
-                        className={`flex items-center px-6 py-2.5 rounded-lg font-medium ${
+                        className={`flex items-center px-6 py-2.5 rounded-lg font-medium transition-opacity ${
                           isValidForm
                             ? 'bg-gradient-to-r from-purple-600 to-cyan-600 hover:opacity-90'
                             : 'bg-slate-800/50 opacity-70 cursor-not-allowed'
@@ -170,17 +193,16 @@ const ReferralPage = () => {
               >
                 <div className="flex justify-center mb-6">
                   <div className="w-20 h-20 rounded-full bg-gradient-to-r from-purple-600/20 to-cyan-600/20 flex items-center justify-center">
-                    <Check className="w-10 h-10 text-green-400" />
+                    <Gift className="w-10 h-10 text-purple-400" />
                   </div>
                 </div>
                 
                 <h2 className="text-3xl font-bold text-white mb-4">
-                  Referral Sent!
+                  Referrals Sent!
                 </h2>
                 
                 <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-8">
-                  Thank you for referring your friends! We&apos;ve sent them an invitation to join Meedo.
-                  Your setup cost will be waived once all 3 friends sign up.
+                  Thank you! We&apos;ve sent an invitation to your friends. Once all 3 sign up and their accounts are verified, your setup fee will be waived.
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
@@ -191,9 +213,9 @@ const ReferralPage = () => {
                       </div>
                       <h3 className="font-medium text-white mb-1">{referral.name}</h3>
                       <p className="text-sm text-slate-400 truncate">{referral.email}</p>
-                      <div className="mt-2 inline-flex items-center text-xs px-2 py-1 rounded-full bg-green-900/20 text-green-400">
+                      <div className="mt-2 inline-flex items-center text-xs px-2 py-1 rounded-full bg-purple-900/20 text-purple-400">
                         <Mail className="w-3 h-3 mr-1" />
-                        Invitation sent
+                        Invitation Sent
                       </div>
                     </div>
                   ))}
@@ -201,10 +223,10 @@ const ReferralPage = () => {
                 
                 <div className="bg-gradient-to-br from-purple-700/30 to-cyan-700/30 rounded-xl border border-purple-500/30 p-6 max-w-2xl mx-auto mb-8">
                   <h3 className="text-xl font-semibold text-white mb-3">
-                    Your Discount is Activated!
+                    Discount Status: Pending
                   </h3>
                   <p className="text-slate-300">
-                    We&apos;ve applied a 100% discount to your setup cost. This will be reflected in your next invoice.
+                    We are now tracking your referrals. The 100% discount will be automatically applied to your setup fee once they subscribe.
                   </p>
                 </div>
                 
@@ -214,7 +236,7 @@ const ReferralPage = () => {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                 >
-                  Return to Dashboard
+                  Return to Home
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </motion.a>
               </motion.div>
