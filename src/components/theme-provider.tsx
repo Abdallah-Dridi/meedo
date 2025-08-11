@@ -7,7 +7,14 @@ import { type ThemeProviderProps } from "next-themes";
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return (
-    <NextThemesProvider attribute="class" defaultTheme="dark" enableSystem={true} {...props}>
+    <NextThemesProvider 
+      attribute="class" 
+      defaultTheme="dark" 
+      enableSystem={true}
+      disableTransitionOnChange={false}
+      storageKey="meedo-theme"
+      {...props}
+    >
       {children}
     </NextThemesProvider>
   );

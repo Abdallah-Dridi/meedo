@@ -24,10 +24,11 @@ export function HeroSection() {
       className="relative flex h-screen items-center justify-center overflow-hidden"
     >
       <div className="absolute inset-0 z-0 flex items-center justify-center">
-        <div className="animate-pulse-slow absolute h-[300px] w-[300px] rounded-full bg-purple-500/20 blur-3xl"></div>
-        <div className="animate-pulse-slow animation-delay-2000 absolute h-[500px] w-[500px] rounded-full bg-cyan-500/10 blur-3xl"></div>
+        <div className="absolute -z-10 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -z-10 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl mt-24 ml-24 animate-pulse animation-delay-1000"></div>
       </div>
 
+      
       <motion.div
         className="z-10 container mx-auto px-4 text-center"
         style={{ y, opacity }}

@@ -1,11 +1,11 @@
 // src/app/layout.tsx
+import { Inter } from 'next/font/google';
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider"; // Import the provider
+import { ThemeProvider } from "@/components/theme-provider";
 
-
-// Removing the unused 'inter' variable to fix ESLint warning
-// const inter = Inter({ subsets: ["latin"] });
+// Initialize the 'inter' variable after the import
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: "Meedo",
@@ -14,12 +14,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className={inter.className}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

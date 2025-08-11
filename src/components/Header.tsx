@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -48,7 +47,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-black/30 backdrop-blur-xl border-b border-white/10">
+    <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-xl border-b border-slate-200 transition-colors duration-300 dark:bg-black/30 dark:border-white/10">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
@@ -56,7 +55,7 @@ export default function Header() {
           className="flex items-center gap-2"
         >
           <div className="w-3 h-3 rounded-full bg-purple-500 animate-pulse"></div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">Meedo</h1>
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent">Meedo</h1>
         </motion.div>
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
@@ -70,13 +69,13 @@ export default function Header() {
                 >
                   <a
                     href={link.href}
-                    className="text-slate-300 hover:text-white transition-colors"
+                    className="text-slate-600 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-white"
                     onClick={(e) => handleFeaturesClick(e)}
                   >
                     {link.name}
                   </a>
                   <button
-                    className="features-dropdown-toggle text-slate-300 hover:text-white transition-colors"
+                    className="features-dropdown-toggle text-slate-600 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-white"
                     onClick={(e) => {
                       e.preventDefault();
                       setIsFeaturesOpen(!isFeaturesOpen);
@@ -88,13 +87,13 @@ export default function Header() {
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="absolute top-full left-0 mt-2 w-56 bg-slate-900/95 backdrop-blur-lg rounded-xl border border-white/10 shadow-lg overflow-hidden"
+                      className="absolute top-full left-0 mt-2 w-56 bg-white/95 backdrop-blur-lg rounded-xl border border-slate-200 shadow-lg overflow-hidden transition-colors duration-300 dark:bg-slate-900/95 dark:border-white/10"
                     >
                       {link.dropdown.map((item, idx) => (
                         <a
                           key={idx}
                           href={item.href}
-                          className="block px-4 py-3 text-sm hover:bg-white/5 transition-colors border-b border-white/5 last:border-b-0"
+                          className="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-100 transition-colors border-b border-slate-100 last:border-b-0 dark:text-slate-200 dark:hover:bg-white/5 dark:border-white/5"
                           onClick={() => setIsFeaturesOpen(false)}
                         >
                           <div className="flex items-center gap-2">
@@ -109,7 +108,7 @@ export default function Header() {
               ) : (
                 <a
                   href={link.href}
-                  className="text-slate-300 hover:text-white transition-colors"
+                  className="text-slate-600 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-white"
                 >
                   {link.name}
                 </a>
@@ -121,7 +120,7 @@ export default function Header() {
           {mounted && (
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-2 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-200 transition-all duration-200 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/10"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
@@ -156,7 +155,7 @@ export default function Header() {
           </motion.a>
           {/* Mobile menu button */}
           <button 
-            className="md:hidden p-2 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+            className="md:hidden p-2 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-200 transition-all duration-200 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/10"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
@@ -180,7 +179,7 @@ export default function Header() {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
-          className="md:hidden bg-slate-900/95 backdrop-blur-lg border-t border-white/10"
+          className="md:hidden bg-white/95 backdrop-blur-lg border-t border-slate-200 transition-colors duration-300 dark:bg-slate-900/95 dark:border-white/10"
         >
           <div className="container mx-auto px-4 py-4">
             <div className="space-y-2">
@@ -194,7 +193,7 @@ export default function Header() {
                       >
                         <a 
                           href={link.href} 
-                          className="text-slate-300 hover:text-white transition-colors"
+                          className="text-slate-700 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-white"
                           onClick={(e) => {
                             e.stopPropagation();
                             setIsMobileMenuOpen(false);
@@ -202,19 +201,19 @@ export default function Header() {
                         >
                           {link.name}
                         </a>
-                        <ChevronDown className={`w-4 h-4 transition-transform ${isFeaturesOpen ? 'rotate-180' : ''}`} />
+                        <ChevronDown className={`w-4 h-4 transition-transform text-slate-600 dark:text-slate-400 ${isFeaturesOpen ? 'rotate-180' : ''}`} />
                       </div>
                       {isFeaturesOpen && (
                         <motion.div 
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
-                          className="pl-4 border-l border-white/10 ml-2"
+                          className="pl-4 border-l border-slate-200 ml-2 dark:border-white/10"
                         >
                           {link.dropdown.map((item, idx) => (
                             <a
                               key={idx}
                               href={item.href}
-                              className="block py-2 text-sm text-slate-400 hover:text-white transition-colors"
+                              className="block py-2 text-sm text-slate-600 hover:text-slate-900 transition-colors dark:text-slate-400 dark:hover:text-white"
                               onClick={() => {
                                 setIsMobileMenuOpen(false);
                                 setIsFeaturesOpen(false);
@@ -229,7 +228,7 @@ export default function Header() {
                   ) : (
                     <a
                       href={link.href}
-                      className="block py-2 text-slate-300 hover:text-white transition-colors"
+                      className="block py-2 text-slate-700 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-white"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {link.name}
@@ -238,7 +237,7 @@ export default function Header() {
                 </div>
               ))}
             </div>
-            <div className="mt-4 pt-4 border-t border-white/10">
+            <div className="mt-4 pt-4 border-t border-slate-200 dark:border-white/10">
               <a 
                 href="signup" 
                 className="w-full inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-cyan-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg"

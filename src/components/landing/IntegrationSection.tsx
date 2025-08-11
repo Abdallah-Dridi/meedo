@@ -32,11 +32,6 @@ export function IntegrationSection() {
         }
       `}</style>
       <section className="relative container mx-auto px-4 py-24" id="integration">
-        {/* Glowing orb effect for background */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <div className="absolute -z-10 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute -z-10 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl mt-24 ml-24 animate-pulse animation-delay-2000"></div>
-        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
