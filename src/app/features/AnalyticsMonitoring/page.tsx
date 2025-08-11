@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import {
   ArrowRight,
@@ -8,16 +8,10 @@ import {
   Users,
   TrendingUp,
   CheckCircle,
-  Star,
   ChevronDown,
   Activity,
-  AlertTriangle,
-  Brain,
-  Download,
-  ThumbsUp,
-  ThumbsDown} from 'lucide-react';
+  Brain} from 'lucide-react';
 import { 
-  LineChart, 
   Line, 
   XAxis, 
   YAxis, 
@@ -27,7 +21,6 @@ import {
   PieChart, 
   Pie, 
   Cell, 
-  BarChart, 
   Bar,
   ComposedChart,
   Area,
@@ -142,13 +135,6 @@ function AnalyticsDashboard() {
     { name: "Tablet", value: 15, color: "#facc15" },
   ];
 
-  const countryData = [
-    { country: "United States", resolutions: 5200, color: "#8b5cf6" },
-    { country: "Canada", resolutions: 2100, color: "#06b6d4" },
-    { country: "United Kingdom", resolutions: 1800, color: "#10b981" },
-    { country: "Australia", resolutions: 1200, color: "#f59e0b" },
-    { country: "Germany", resolutions: 900, color: "#ef4444" },
-  ];
 
   const satisfactionData = [
     { date: "Jul 10", csat: 84 },
