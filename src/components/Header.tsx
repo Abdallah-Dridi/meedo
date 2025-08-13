@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import { ChevronDown, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -54,8 +55,10 @@ export default function Header() {
           animate={{ opacity: 1, x: 0 }}
           className="flex items-center gap-2"
         >
-          <div className="w-3 h-3 rounded-full bg-purple-500 animate-pulse"></div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent">Meedo</h1>
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-purple-500 animate-pulse"></div>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent">Meedo</h1>
+          </Link>
         </motion.div>
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
