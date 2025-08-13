@@ -108,11 +108,11 @@ export function IntegrationSection() {
               </div>
             </div>
             <h3 className="mb-4 text-2xl font-bold text-white">
-              Don't see your platform?
-            </h3>
-            <p className="mb-6 max-w-2xl mx-auto text-slate-200">
-              Whether you're using a custom-built website or a platform not listed above, we've got you covered. Our flexible integration system works with any e-commerce solution.
-            </p>
+  Don&apos;t see your platform?
+</h3>
+<p className="mb-6 max-w-2xl mx-auto text-slate-200">
+  Whether you&apos;re using a custom-built website or a platform not listed above, we&apos;ve got you covered. Our flexible integration system works with any e-commerce solution.
+</p>
             <Link
               href="/signup"
               className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-cyan-600 px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:shadow-purple-500/50 hover:from-purple-500 hover:to-cyan-500 group transform hover:-translate-y-1"

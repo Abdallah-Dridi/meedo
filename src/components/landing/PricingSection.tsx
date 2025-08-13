@@ -403,7 +403,7 @@ export function PricingSection() {
                     </div>
                     <div className="ml-6">
                       <div className="text-sm font-black text-gray-700 uppercase tracking-widest">Referrals Needed</div>
-                      <div className="text-xs font-medium text-gray-500">It's that simple!</div>
+                      <div className="text-xs font-medium text-gray-500">It&apos;s that simple!</div>
                     </div>
                   </motion.div>
                   
