@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 const integrations = [
@@ -58,11 +59,12 @@ export function IntegrationSection() {
               className="flex space-x-12 animate-[scroll_10s_linear_infinite] group-hover:[animation-play-state:paused]"
             >
               {duplicatedIntegrations.map((integration, index) => (
-                <div
+                <Link
                   key={`${integration.name}-${index}`}
-                  className="flex-shrink-0 w-[200px]"
+                  href="/signup"
+                  className="flex-shrink-0 w-[200px] block"
                 >
-                  <div className="relative flex flex-col items-center justify-center p-6 bg-slate-800/50 rounded-2xl border border-white/10 transition-all duration-300 hover:!border-purple-500/80 hover:bg-slate-800/80">
+                  <div className="relative flex flex-col items-center justify-center p-6 bg-slate-800/50 rounded-2xl border border-white/10 transition-all duration-300 hover:!border-purple-500/80 hover:bg-slate-800/80 cursor-pointer">
                       {/* Inner glowing effect */}
                       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                       
@@ -79,7 +81,7 @@ export function IntegrationSection() {
                         {integration.name}
                       </span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
