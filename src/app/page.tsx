@@ -9,7 +9,7 @@ import { FeatureCategorySection } from "@/components/landing/FeatureCategorySect
 import { PricingSection } from "@/components/landing/PricingSection";
 import { IntegrationSection } from "@/components/landing/IntegrationSection";
 import { FinalCTA } from "@/components/landing/FinalCTA";
-
+import { TestimonialsSection } from "@/components/landing/TestimonialsSection";
 // --- Main Landing Page Component ---
 export default function Page() {
   return (
@@ -22,6 +22,7 @@ export default function Page() {
         <FeatureCategorySection />
         <PricingSection />
         <IntegrationSection />
+        <TestimonialsSection/>
         <FinalCTA />
       </main>
       <Footer />
