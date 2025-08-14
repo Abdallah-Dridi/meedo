@@ -48,7 +48,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-xl border-b border-slate-200 transition-colors duration-300 dark:bg-black/30 dark:border-white/10">
+    <header className="fixed top-0 z-50 w-full bg-white/80 backdrop-blur-xl border-b border-slate-200 transition-colors duration-300 dark:bg-black/30 dark:border-white/10">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
