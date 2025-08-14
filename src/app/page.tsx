@@ -20,9 +20,9 @@ export default function Page() {
         <HeroSection />
         <AboutSection />
         <FeatureCategorySection />
+        <TestimonialsSection/>
         <PricingSection />
         <IntegrationSection />
-        <TestimonialsSection/>
         <FinalCTA />
       </main>
       <Footer />
