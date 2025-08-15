@@ -524,7 +524,6 @@ function AnalyticsMonitoringPage() {
         <AnalyticsDashboardSection />
         <CoreFeaturesSection />
         <TechnicalSpecs />
-        <CustomerTestimonial />
         <CallToAction />
       </main>
       <Footer />
@@ -786,7 +785,7 @@ function CallToAction() {
             >
               <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></span>
               <span className="relative flex items-center">
-                Get Started Free
+                Get Started
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </span>
             </motion.a>
