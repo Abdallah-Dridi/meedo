@@ -1,4 +1,3 @@
-// src/components/ReferralPage.tsx
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -10,6 +9,7 @@ import { ParticlesBackground } from '@/components/ParticlesBackground';
 
 const ReferralPage = () => {
   const [step, setStep] = useState(0);
+  const [meedoID, setMeedoID] = useState('');
   const [referrals, setReferrals] = useState([
     { name: '', email: '' },
     { name: '', email: '' },
@@ -40,14 +40,14 @@ const ReferralPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formError) return; // Prevent submission if there's an error
+    if (formError || !meedoID.trim()) return; // Prevent submission if there's an error or MeedoID is empty
     // Simulate form submission
     setTimeout(() => {
       setIsSubmitted(true);
     }, 1500);
   };
 
-  const isValidForm = referrals.every(ref => ref.name.trim() && ref.email.trim()) && !formError;
+  const isValidForm = meedoID.trim() && referrals.every(ref => ref.name.trim() && ref.email.trim()) && !formError;
 
   return (
     <div className="bg-white dark:bg-gradient-to-br dark:from-black dark:to-slate-900 text-slate-200 min-h-screen font-sans antialiased overflow-x-hidden">
@@ -85,8 +85,6 @@ const ReferralPage = () => {
               </div>
             </div>
 
-
-
             {/* Progress Bar */}
             <div className="flex items-center mb-8">
               <div className="flex-1 h-2 bg-slate-800/50 rounded-full overflow-hidden">
@@ -110,6 +108,22 @@ const ReferralPage = () => {
                   exit={{ opacity: 0, x: -20 }}
                   className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 rounded-3xl border border-white/10 p-8 md:p-12 backdrop-blur-sm"
                 >
+                  {/* MeedoID Input */}
+                  <div className="mb-8">
+                    <label htmlFor="meedoID" className="block text-sm font-medium text-slate-300 mb-3">
+                      Your MeedoID *
+                    </label>
+                    <input
+                      type="text"
+                      id="meedoID"
+                      value={meedoID}
+                      onChange={(e) => setMeedoID(e.target.value)}
+                      className="w-full px-4 py-4 bg-slate-800/40 border border-white/10 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all duration-300 text-white placeholder-slate-500"
+                      placeholder="Enter your MeedoID"
+                      required
+                    />
+                  </div>
+
                   <div className="flex items-center gap-4 mb-8">
                     <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-600/20 to-cyan-600/20 border border-purple-500/30">
                       <User className="w-6 h-6 text-purple-400" />
