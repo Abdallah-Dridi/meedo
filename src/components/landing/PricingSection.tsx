@@ -409,7 +409,7 @@ export function PricingSection() {
                   
                   <Link href="/referral">
                     <motion.button
-                      className="group inline-flex items-center rounded-full bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-700 px-10 py-5 text-xl font-black text-white shadow-2xl transition-all duration-300 hover:shadow-3xl focus:outline-none focus:ring-4 focus:ring-purple-500/50 overflow-hidden relative"
+                      className="group inline-flex items-center rounded-full bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-700 px-10 py-5 text-xl font-black text-white shadow-2xl transition-all duration-300 hover:shadow-3xl focus:outline-none focus:ring-4 focus:ring-purple-500/50 overflow-hidden relative cursor-pointer"
                       whileHover={{ 
                         scale: 1.05, 
                         y: -3,
