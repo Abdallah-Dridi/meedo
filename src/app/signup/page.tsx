@@ -1,9 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Check, Mail, User, X, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { ParticlesBackground } from '@/components/ParticlesBackground'; // Import the correct component
 
 // Type definitions
 interface DateObj {
@@ -179,34 +181,11 @@ const ContactDemoPage = () => {
     <>
     <Header/>
     <div className="min-h-screen overflow-x-hidden bg-white font-sans text-slate-200 antialiased dark:bg-gradient-to-br dark:from-black dark:to-slate-900">
-      {/* Animated Background */}
-      <div className="fixed inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-transparent to-cyan-900/30"></div>
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 8}s`,
-              animationDuration: `${6 + Math.random() * 6}s`
-            }}
-          >
-            <div className="h-4 w-4 rounded-lg bg-gradient-to-r from-purple-500 to-cyan-500 opacity-40 transform rotate-45"></div>
-          </div>
-        ))}
-      </div>
+      
+      {/* Use the correct ParticlesBackground component */}
+      <ParticlesBackground />
 
       <style jsx>{`
-        @keyframes float {
-          0% { transform: translateY(0) rotate(45deg); opacity: 0.4; }
-          50% { transform: translateY(-20px) rotate(45deg); opacity: 0.8; }
-          100% { transform: translateY(0) rotate(45deg); opacity: 0.4; }
-        }
-        .animate-float {
-          animation: float infinite;
-        }
         @keyframes slideIn {
           0% { transform: translateX(100%); opacity: 0; }
           100% { transform: translateX(0); opacity: 1; }

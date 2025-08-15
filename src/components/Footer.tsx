@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function Footer() {
   const footerLinks = {
@@ -13,10 +14,8 @@ export default function Footer() {
       { name: "Book a Demo", href: "/signup?tab=demo" },
     ],
     company: [
-      { name: "About Us", href: "/about" },
-      { name: "Careers", href: "/careers" },
-      { name: "Contact", href: "/contact" },
-      { name: "Blog", href: "/blog" },
+      { name: "About Us", href: "/" },
+      { name: "Contact", href: "/signup" },
     ],
     legal: [
       { name: "Terms of Service", href: "/terms" },
@@ -32,7 +31,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="border-t border-white/10 bg-slate-900/50">
+    <footer className="relative z-10 border-t border-white/10 bg-slate-900/50">
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Branding and Newsletter */}
@@ -69,9 +68,9 @@ export default function Footer() {
               <ul className="space-y-3">
                 {footerLinks.product.map((link, i) => (
                   <li key={i}>
-                    <a href={link.href} className="text-slate-400 hover:text-white transition-colors text-sm">
+                    <Link href={link.href} className="text-slate-400 hover:text-white transition-colors text-sm">
                       {link.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -81,9 +80,9 @@ export default function Footer() {
               <ul className="space-y-3">
                 {footerLinks.company.map((link, i) => (
                   <li key={i}>
-                    <a href={link.href} className="text-slate-400 hover:text-white transition-colors text-sm">
+                    <Link href={link.href} className="text-slate-400 hover:text-white transition-colors text-sm">
                       {link.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -93,9 +92,9 @@ export default function Footer() {
               <ul className="space-y-3">
                 {footerLinks.legal.map((link, i) => (
                   <li key={i}>
-                    <a href={link.href} className="text-slate-400 hover:text-white transition-colors text-sm">
+                    <Link href={link.href} className="text-slate-400 hover:text-white transition-colors text-sm">
                       {link.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -110,14 +109,14 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-4">
             {socialLinks.map((link, i) => (
-              <a
+              <Link
                 key={i}
                 href={link.href}
                 aria-label={link.name}
                 className="text-slate-500 hover:text-white transition-colors"
               >
                 {link.icon}
-              </a>
+              </Link>
             ))}
           </div>
         </div>

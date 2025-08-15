@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import { ChevronDown, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import Link from "next/link"; // Make sure Link is imported from "next/link"
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -14,7 +14,6 @@ export default function Header() {
 
   useEffect(() => setMounted(true), []);
 
-  // Navigation links
   const navLinks = [
     { name: "Home", href: "/" },
     {
@@ -28,6 +27,7 @@ export default function Header() {
         { name: "Order Management", href: "/features/OrderManagement" },
       ]
     },
+    {name: "Testimonials", href:"/#testimonials"},
     { name: "Pricing", href: "/#pricing" },
     { name: "Integrations", href: "/#integration" },
   ];
@@ -70,13 +70,13 @@ export default function Header() {
                   onMouseEnter={handleDropdownEnter}
                   onMouseLeave={handleDropdownLeave}
                 >
-                  <a
+                  <Link
                     href={link.href}
                     className="text-slate-600 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-white"
                     onClick={(e) => handleFeaturesClick(e)}
                   >
                     {link.name}
-                  </a>
+                  </Link>
                   <button
                     className="features-dropdown-toggle text-slate-600 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-white"
                     onClick={(e) => {
@@ -93,7 +93,7 @@ export default function Header() {
                       className="absolute top-full left-0 mt-2 w-56 bg-white/95 backdrop-blur-lg rounded-xl border border-slate-200 shadow-lg overflow-hidden transition-colors duration-300 dark:bg-slate-900/95 dark:border-white/10"
                     >
                       {link.dropdown.map((item, idx) => (
-                        <a
+                        <Link
                           key={idx}
                           href={item.href}
                           className="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-100 transition-colors border-b border-slate-100 last:border-b-0 dark:text-slate-200 dark:hover:bg-white/5 dark:border-white/5"
@@ -103,18 +103,18 @@ export default function Header() {
                             <div className="w-2 h-2 rounded-full bg-purple-500"></div>
                             {item.name}
                           </div>
-                        </a>
+                        </Link>
                       ))}
                     </motion.div>
                   )}
                 </div>
               ) : (
-                <a
+                <Link
                   href={link.href}
                   className="text-slate-600 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-white"
                 >
                   {link.name}
-                </a>
+                </Link>
               )}
             </div>
           ))}
@@ -146,7 +146,7 @@ export default function Header() {
             </button>
           )}
           <motion.a 
-            href="signup" 
+            href="/signup" 
             className="hidden md:inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-cyan-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:shadow-purple-500/30 group"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -194,7 +194,7 @@ export default function Header() {
                         className="flex items-center justify-between py-2 cursor-pointer"
                         onClick={() => setIsFeaturesOpen(!isFeaturesOpen)}
                       >
-                        <a 
+                        <Link
                           href={link.href} 
                           className="text-slate-700 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-white"
                           onClick={(e) => {
@@ -203,7 +203,7 @@ export default function Header() {
                           }}
                         >
                           {link.name}
-                        </a>
+                        </Link>
                         <ChevronDown className={`w-4 h-4 transition-transform text-slate-600 dark:text-slate-400 ${isFeaturesOpen ? 'rotate-180' : ''}`} />
                       </div>
                       {isFeaturesOpen && (
@@ -213,7 +213,7 @@ export default function Header() {
                           className="pl-4 border-l border-slate-200 ml-2 dark:border-white/10"
                         >
                           {link.dropdown.map((item, idx) => (
-                            <a
+                            <Link
                               key={idx}
                               href={item.href}
                               className="block py-2 text-sm text-slate-600 hover:text-slate-900 transition-colors dark:text-slate-400 dark:hover:text-white"
@@ -223,31 +223,31 @@ export default function Header() {
                               }}
                             >
                               {item.name}
-                            </a>
+                            </Link>
                           ))}
                         </motion.div>
                       )}
                     </div>
                   ) : (
-                    <a
+                    <Link
                       href={link.href}
                       className="block py-2 text-slate-700 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-white"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {link.name}
-                    </a>
+                    </Link>
                   )}
                 </div>
               ))}
             </div>
             <div className="mt-4 pt-4 border-t border-slate-200 dark:border-white/10">
-              <a 
-                href="signup" 
+              <Link
+                href="/signup" 
                 className="w-full inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-cyan-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg"
               >
                 Get Started 
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
+              </Link>
             </div>
           </div>
         </motion.div>

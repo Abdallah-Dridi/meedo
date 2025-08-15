@@ -15,6 +15,18 @@ import {
 // Feature categories data remains the same...
 const featureCategories = [
   {
+    title: "Personalization & Intelligence",
+    icon: <User className="h-10 w-10" />,
+    href: "/features/PersonalizationIntelligence",
+    features: [
+      "Rule-specific AI agents - Automatically applies rules based on store policy and procedure",
+      "Brand-specific AI personality - Allow store owners to define AI personality, tone, and response style (friendly, luxury, minimalist, etc.)",
+      "Cross-session memory - Remember past customer interactions, order history, and preferences for consistent, personalized responses across all channels",
+      "Inventory-integrated recommendations - Suggest available alternative products for out-of-stock items or exchange requests",
+    ],
+  },
+  
+  {
     title: "Core Communication & Language Support",
     icon: <Languages className="h-10 w-10" />,
     href: "/features/multi-language",
@@ -25,18 +37,18 @@ const featureCategories = [
       "Instant query resolution - Resolve customer questions immediately without requiring human intervention",
     ],
   },
+
   {
-    title: "Order Management & Processing",
-    icon: <Package className="h-10 w-10" />,
-    href: "/features/OrderManagement",
+    title: "Analytics & Monitoring",
+    icon: <BarChart2 className="h-10 w-10" />,
+    href: "/features/AnalyticsMonitoring",
     features: [
-      "Order status tracking - Provide real-time order updates with integrated tracking links",
-      "Exchange label generation - Automatically create shipping labels to facilitate product exchanges",
-      "Automated returns processing - Instantly handle return requests while flagging potentially fraudulent cases",
-      "Smart refund/exchange logic - Automatically apply store-specific return and exchange policies and conditions",
-      "Proactive shipping notifications - Automatically send updates when shipping delays are detected, before customers inquire",
+      "Customer satisfaction tracking - Monitor satisfaction levels through integrated survey systems",
+      "Real-time automation analytics - Track system health with customizable analytics platform for complete automation control",
+      "Performance insights - Comprehensive dashboard to monitor and optimize all aspects of the AI automation",
     ],
   },
+
   {
     title: "Social Media Management",
     icon: <ShoppingBag className="h-10 w-10" />,
@@ -48,25 +60,17 @@ const featureCategories = [
       "Strategic escalation options - Forward cases to human agents when needed as a goodwill gesture to enhance brand relationships",
     ],
   },
+
   {
-    title: "Personalization & Intelligence",
-    icon: <User className="h-10 w-10" />,
-    href: "/features/PersonalizationIntelligence",
+    title: "Order Management & Processing",
+    icon: <Package className="h-10 w-10" />,
+    href: "/features/OrderManagement",
     features: [
-      "Rule-specific AI agents - Automatically applies rules based on store policy and procedure",
-      "Brand-specific AI personality - Allow store owners to define AI personality, tone, and response style (friendly, luxury, minimalist, etc.)",
-      "Cross-session memory - Remember past customer interactions, order history, and preferences for consistent, personalized responses across all channels",
-      "Inventory-integrated recommendations - Suggest available alternative products for out-of-stock items or exchange requests",
-    ],
-  },
-  {
-    title: "Analytics & Monitoring",
-    icon: <BarChart2 className="h-10 w-10" />,
-    href: "/features/AnalyticsMonitoring",
-    features: [
-      "Customer satisfaction tracking - Monitor satisfaction levels through integrated survey systems",
-      "Real-time automation analytics - Track system health with customizable analytics platform for complete automation control",
-      "Performance insights - Comprehensive dashboard to monitor and optimize all aspects of the AI automation",
+      "Order status tracking - Provide real-time order updates with integrated tracking links",
+      "Exchange label generation - Automatically create shipping labels to facilitate product exchanges",
+      "Automated returns processing - Instantly handle return requests while flagging potentially fraudulent cases",
+      "Smart refund/exchange logic - Automatically apply store-specific return and exchange policies and conditions",
+      "Proactive shipping notifications - Automatically send updates when shipping delays are detected, before customers inquire",
     ],
   },
 ];
@@ -100,7 +104,7 @@ function FeatureCategoryCard({
     <motion.div
       whileHover={{ y: -10 }}
       transition={{ type: "spring", stiffness: 300 }}
-      className="flex h-[420px] w-[350px] flex-col" // Fixed height AND width
+      className="flex h-[420px] w-[350px] flex-col"
     >
       <Tilt
         tiltMaxAngleX={5}
@@ -197,8 +201,6 @@ export function FeatureCategorySection() {
           {/* First row with 3 cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
             {featureCategories.slice(0, 3).map((category, index) => (
-              // We add `flex justify-center` here to ensure the card is perfectly
-              // centered within its grid column, which is a good practice.
               <div key={index} className="flex justify-center">
                 <FeatureCategoryCard
                   title={category.title}
@@ -210,16 +212,11 @@ export function FeatureCategorySection() {
             ))}
           </div>
           
-          {/* Second row with 2 centered cards -- CORRECTED */}
-          {/* This container now uses flex and justify-center.
-              It will center the two cards within the same width as the row above,
-              ensuring perfect alignment and balanced side margins. */}
+          
           <div className="flex flex-wrap justify-center gap-8">
             {featureCategories.slice(3).map((category, index) => (
-              // The outer wrapper div with `md:w-1/2` is no longer needed.
-              // We render the card directly, and the parent flex container handles positioning.
               <FeatureCategoryCard
-                key={index + 3} // Use a unique key
+                key={index + 3}
                 title={category.title}
                 icon={category.icon}
                 features={category.features}

@@ -70,7 +70,7 @@ export function HeroSection() {
 
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
           <motion.a
-            href="signup"
+            href="/signup"
             className="group relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-r from-purple-600 to-cyan-600 px-8 py-3.5 font-semibold text-white shadow-lg"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
@@ -184,7 +184,7 @@ const ScrollingRow = ({ testimonials, direction = 'left' }: { testimonials: Test
 
 export function TestimonialsSection() {
   return (
-    <section className="py-24 bg-slate-900/50 overflow-hidden">
+    <section className="py-24 bg-slate-900/50 overflow-hidden" id="testimonials">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -201,7 +201,7 @@ export function TestimonialsSection() {
         </motion.div>
       </div>
 
-      <div className="relative flex flex-col gap-8 py-8" // <-- FIX: Added vertical padding
+      <div className="relative flex flex-col gap-8 py-8" 
         style={{
           maskImage: 'linear-gradient(to right, transparent, white 10%, white 90%, transparent)',
         }}
