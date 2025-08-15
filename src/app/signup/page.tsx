@@ -179,24 +179,49 @@ const ContactDemoPage = () => {
     <>
     <Header/>
     <div className="min-h-screen overflow-x-hidden bg-white font-sans text-slate-200 antialiased dark:bg-gradient-to-br dark:from-black dark:to-slate-900">
-      {/* Particles Background */}
+      {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-cyan-900/20"></div>
-        {[...Array(50)].map((_, i) => (
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-transparent to-cyan-900/30"></div>
+        {[...Array(20)].map((_, i) => (
           <div
             key={i}
-            className="absolute animate-pulse"
+            className="absolute animate-float"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`
+              animationDelay: `${Math.random() * 8}s`,
+              animationDuration: `${6 + Math.random() * 6}s`
             }}
           >
-            <div className="h-1 w-1 rounded-full bg-gradient-to-r from-purple-400 to-cyan-400 opacity-60"></div>
+            <div className="h-4 w-4 rounded-lg bg-gradient-to-r from-purple-500 to-cyan-500 opacity-40 transform rotate-45"></div>
           </div>
         ))}
       </div>
+
+      <style jsx>{`
+        @keyframes float {
+          0% { transform: translateY(0) rotate(45deg); opacity: 0.4; }
+          50% { transform: translateY(-20px) rotate(45deg); opacity: 0.8; }
+          100% { transform: translateY(0) rotate(45deg); opacity: 0.4; }
+        }
+        .animate-float {
+          animation: float infinite;
+        }
+        @keyframes slideIn {
+          0% { transform: translateX(100%); opacity: 0; }
+          100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+          0% { transform: translateX(0); opacity: 1; }
+          100% { transform: translateX(-100%); opacity: 0; }
+        }
+        .animate-slide-in {
+          animation: slideIn 0.6s ease-out forwards;
+        }
+        .animate-slide-out {
+          animation: slideOut 0.6s ease-out forwards;
+        }
+      `}</style>
 
       <main className="relative z-10 pt-24 pb-16">
         <div className="container mx-auto px-4">
@@ -312,7 +337,7 @@ const ContactDemoPage = () => {
             ) : (
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
                 {/* Form Column */}
-                <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-slate-800/50 to-slate-900/50 p-8 md:p-10">
+                <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-slate-800/50 to-slate-900/50 p-8 md:p-10 min-h-[600px]">
                   <h2 className="mb-1 text-2xl font-bold text-white">
                     {activeTab === "contact"
                       ? "Talk to Our Team"
@@ -331,7 +356,7 @@ const ContactDemoPage = () => {
                     </div>
                   )}
 
-                  <div>
+                  <div className="relative">
                     <div className="space-y-5">
                       <div>
                         <label htmlFor="name" className="mb-2 block text-sm font-medium text-slate-400">
@@ -410,7 +435,7 @@ const ContactDemoPage = () => {
                               )}
                             </button>
                           ) : (
-                            <div className="rounded-lg border border-white/10 bg-slate-800/30 p-4">
+                            <div className="absolute z-20 left-0 right-0 top-0 rounded-lg border border-white/10 bg-slate-800/90 p-4 backdrop-blur-md max-w-[400px] mx-auto">
                               {/* Calendar Header */}
                               <div className="mb-4 flex items-center justify-between">
                                 <button
@@ -547,13 +572,13 @@ const ContactDemoPage = () => {
                 <div className="relative hidden flex-col overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/90 to-slate-800/90 shadow-2xl backdrop-blur-xl lg:flex">
                   {/* Profile with large image */}
                   <div className="relative z-10 p-10 pt-12">
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-col items-center animate-slide-in">
                       <div className="relative mb-6">
                         <div className="h-32 w-32 overflow-hidden rounded-full border-4 border-white/20 shadow-xl transition-all duration-500">
-                        <img
+                          <img
                             src={currentTestimonial.image}
                             alt={currentTestimonial.name}
-                            className="h-full w-full object-cover"
+                            className="h-full w-full object-cover scale-110 hover:scale-100 transition-transform duration-500"
                             loading="lazy"
                           />
                         </div>
@@ -562,26 +587,26 @@ const ContactDemoPage = () => {
                         </div>
                       </div>
 
-                      <p className="text-xl font-medium text-white transition-all duration-500">{currentTestimonial.name}</p>
-                      <p className="mt-1 text-sm text-slate-400 transition-all duration-500">{currentTestimonial.role}</p>
+                      <p className="text-xl font-bold text-white transition-all duration-500">{currentTestimonial.name}</p>
+                      <p className="mt-1 text-sm text-slate-300 transition-all duration-500">{currentTestimonial.role}</p>
                     </div>
                   </div>
 
                   {/* Quote */}
                   <div className="relative z-10 flex flex-grow flex-col px-10 pb-12">
                     <div className="mb-6 flex justify-center">
-                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-slate-400">
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-slate-300">
                         <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" />
                         <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z" />
                       </svg>
                     </div>
 
-                    <blockquote className="text-center text-lg leading-relaxed tracking-normal text-slate-300 transition-all duration-500 min-h-[120px] flex items-center">
+                    <blockquote className="text-center text-lg leading-relaxed tracking-normal text-slate-200 transition-all duration-500 min-h-[120px] flex items-center animate-slide-in">
                       &ldquo;{currentTestimonial.quote}&rdquo;
                     </blockquote>
 
-                    <div className="mt-8 rounded-xl border border-white/10 bg-white/5 p-4 transition-all duration-500">
-                      <p className="text-center text-sm text-slate-400 italic">
+                    <div className="mt-8 rounded-xl border border-white/10 bg-gradient-to-r from-purple-700/30 to-cyan-700/30 p-4 transition-all duration-500">
+                      <p className="text-center text-sm text-slate-200 italic">
                         &ldquo;{currentTestimonial.result}&rdquo;
                       </p>
                     </div>
@@ -592,10 +617,10 @@ const ContactDemoPage = () => {
                         <button
                           key={index}
                           onClick={() => setTestimonialIndex(index)}
-                          className={`h-2 w-2 rounded-full transition-all duration-300 ${
+                          className={`h-3 w-3 rounded-full transition-all duration-300 ${
                             index === testimonialIndex
-                              ? 'bg-gradient-to-r from-purple-600 to-cyan-600'
-                              : 'bg-slate-600 hover:bg-slate-500'
+                              ? 'bg-gradient-to-r from-purple-600 to-cyan-600 scale-125'
+                              : 'bg-slate-500 hover:bg-slate-400'
                           }`}
                         />
                       ))}
@@ -612,6 +637,5 @@ const ContactDemoPage = () => {
     </>
   );
 };
-
 
 export default ContactDemoPage;
