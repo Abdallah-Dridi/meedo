@@ -68,14 +68,14 @@ const ContactDemoPage = () => {
       role: "CEO, TechStart",
       quote: "Meedo transformed our customer support from chaos to perfection. Our response time went from hours to minutes, and our team can focus on what matters most.",
       result: "Response time reduced by 89% in the first month",
-      image: "/images/monik.png"
+      image: "/images/sarah.png"
     },
     {
       name: "Alex Rodriguez",
       role: "Head of Support, GrowthCorp",
       quote: "The AI understanding is incredible. It handles complex queries better than some of our junior staff. It's like having a customer service expert available 24/7.",
       result: "Handled 78% of queries without human intervention",
-      image: "/images/monik.png"
+      image: "/images/alex.png"
     }
   ];
 
